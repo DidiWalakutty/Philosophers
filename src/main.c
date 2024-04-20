@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:20:15 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/04/20 20:43:27 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/04/20 20:50:17 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_table	*table;
 
-	if (argc != 5)
+	if (argc != 4)
 		exit_error("Wrong amount of arguments");
 	if (validation_check(argc, argv) == false)
 		return (1);
