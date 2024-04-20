@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/04/09 16:15:44 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/04/20 20:42:00 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,30 @@
 # define PHILO_H
 
 // printf zelf protecten met eigen mutex lock!!!
-# include <stdio.h>
-# include <string.h>
-# include <stdlib.h>
-# include <stddef.h>
-# include <unistd.h>
-# include <sys/time.h>
-# include <pthread.h>
+# include <string.h>	// memset
+# include <stdlib.h>	// malloc, free
+# include <unistd.h>	// write, usleep
+# include <stdio.h>		// printf
+# include <sys/time.h>	// gettimeofday
+# include <fcntl.h>		// macro to open files (O_CREAT, O_WRONLY, O_RDONLY)
+# include <pthread.h>	// thread and mutex
+# include <stdbool.h>	// booleans
+# include <stdint.h>	// cross-compilers
+
+typedef struct s_time
+{
+
+}	t_time;
+
+typedef struct s_philo
+{
+
+}	t_philo;
+
+typedef struct s_table
+{
+	t_philo		*philos;
+	t_time		start_sim;
+}	t_table;
 
 #endif

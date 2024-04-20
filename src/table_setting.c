@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   table_setting.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/09 16:20:15 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/04/20 20:43:27 by diwalaku      ########   odam.nl         */
+/*   Created: 2024/04/20 20:38:28 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/04/20 20:46:01 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	main(int argc, char **argv)
+void	*set_table(char **argv)
 {
-	t_table	*table;
-
-	if (argc != 5)
-		exit_error("Wrong amount of arguments");
-	if (validation_check(argc, argv) == false)
-		return (1);
-	table = set_table(argv);
+	// set numbers into arguments
 }
