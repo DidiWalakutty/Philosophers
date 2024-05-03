@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/03 17:57:20 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/03 18:03:07 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_table
 
 // Functions
 
-// Utils
+// Utils 
 void	exit_error(char *str);
 int		ft_strlen(char *str);
 bool	is_digit(int num);
