@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 20:38:28 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/03 17:51:48 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/03 17:57:13 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ t_table	*set_table(char **argv)
 	if (!table)
 		return (1);
 	if (input_validation(&table, argv))
-		// set numbers into arguments
+		// set numbers into arguments 
 }

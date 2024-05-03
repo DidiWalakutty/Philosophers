@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:20:15 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/03 17:42:46 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/03 17:57:28 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ int	main(int argc, char **argv)
 	if ((argument_check(argc, argv)) == false)
 		return (1);
 	table = set_table(argv);
+	
 }
