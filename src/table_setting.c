@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/20 20:38:28 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/03 18:02:53 by diwalaku      ########   odam.nl         */
+/*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/05/03 18:08:06 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	input_validation(t_table *table, char **argv)
 	int	i;
 
 	i = 0;
-	// In which struct do we set the number of philos, time to eat, die and sleep??? 
+	// In which struct do we set the number of philos, time to eat, die and sleep???
 }
 
 t_table	*set_table(char **argv)
