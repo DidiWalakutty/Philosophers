@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/04/20 21:53:04 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/03 17:50:57 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,14 @@
 typedef struct s_time
 {
 
-}	t_time;
+}	t_data;
 
 typedef struct s_philo
 {
-
 }	t_philo;
 
 typedef struct s_table
 {
-	t_philo		*philos;
-	t_time		start_sim;
 }	t_table;
 
 // Functions
@@ -48,7 +45,7 @@ int		ft_strlen(char *str);
 bool	is_digit(int num);
 
 // Checks
-bool	validation_check(int argc, char **argv);
+bool	argument_check(int argc, char **argv);
 
 // Initalize
 t_table	*set_table(char **argv);

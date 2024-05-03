@@ -6,14 +6,14 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 18:47:32 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/04/20 21:52:40 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/03 17:38:51 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
 // Checks for length of each argv, if it's digits only and the min/max length
-bool	validation_check(int argc, char **argv)
+bool	argument_check(int argc, char **argv)
 {
 	int	i;
 	int	j;

@@ -6,13 +6,13 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 20:38:28 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/04/20 21:54:18 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/03 17:51:48 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static int	check_numbers(t_table *table, char **argv)
+static int	input_validation(t_table *table, char **argv)
 {
 	int	i;
 
@@ -27,6 +27,6 @@ t_table	*set_table(char **argv)
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (1);
-	if (check_numbers(&table, argv))
-	// set numbers into arguments
+	if (input_validation(&table, argv))
+		// set numbers into arguments
 }
