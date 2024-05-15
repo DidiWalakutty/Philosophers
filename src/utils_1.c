@@ -6,11 +6,11 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 18:47:32 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/03 18:08:19 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/15 14:15:58 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../include/philo.h"
 
 // Checks for length of each argv, if it's digits only and the min/max length
 bool	argument_check(int argc, char **argv)

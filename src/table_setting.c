@@ -6,11 +6,11 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/03 18:08:06 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/15 14:15:55 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../include/philo.h"
 
 static int	input_validation(t_table *table, char **argv)
 {
