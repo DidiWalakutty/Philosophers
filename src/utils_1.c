@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 18:47:32 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/15 17:51:56 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/18 14:36:41 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,24 @@ long	ft_atol(char *str)
 		i++;
 	}
 	return (num);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
+}
+
+bool	is_digit(int num)
+{
+	if (num >= '0' && num <= '9')
+		return (true);
+	else
+		return (false);
 }

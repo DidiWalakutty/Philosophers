@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/15 14:14:03 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/18 14:43:34 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 // printf zelf protecten met eigen mutex lock!!!
+// exit_error is verboden
 # include <string.h>	// memset
 # include <stdlib.h>	// malloc, free
 # include <unistd.h>	// write, usleep
@@ -46,10 +47,17 @@ typedef struct s_time
 typedef struct s_philo
 {
 	long			id;
-	pthread_t		thread;
-	t_status		status;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
 	long			last_eat;
+	bool			limited_dinner;
+	long			number_of_meals;
+	bool			meal_check;
+	struct s_table	*table_struct;
+	t_status		status;
 	pthread_mutex_t	r_fork;
+	pthread_t		thread;
 }	t_philo;
 
 typedef struct s_table
@@ -60,18 +68,22 @@ typedef struct s_table
 	long		time_to_die;
 	long		time_to_eat;
 	long		time_to_sleep;
+	long		number_of_meals;
+	bool		limited_dinner;
 }	t_table;
 
 // Functions
 // Utils  
-void	exit_error(char *str);
 int		ft_strlen(char *str);
 bool	is_digit(int num);
+void	free_philos(int i, t_table *table);
 
 // Checks
 bool	argument_check(int argc, char **argv);
+long	ft_atol(char *str);
 
 // Initalize
-t_table	*set_table(char **argv);
+t_table	*set_table(int argc, char **argv, t_table *table);
+int		allocate_philos(t_table *table);
 
 #endif
