@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/18 14:46:59 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/18 16:59:35 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,29 @@ int	allocate_philos(t_table *table)
 	if (!table->philos)
 	{
 		printf("Malloc failure!\n");
-		return (1);
+		return (0);
 	}
-	while (i <= table->num_of_philos)
+	while (i < table->num_of_philos)
 	{
 		table->philos[i] = malloc(sizeof(t_philo));
 		if (!table->philos[i])
 		{
 			free_philos(i, table);
-			return (1);
+			return (0);
 		}
 		inform_philos(i, table);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
-static int	initialize_input(int argc, t_table *table, char **argv)
+static int	initialize_input(int argc, char **argv, t_table *table)
 {
 	table->num_of_philos = ft_atol(argv[1]);
 	if (table->num_of_philos == 0 || table->num_of_philos > 200)
 	{
 		printf("Philos should be a minimum of 1 and maximum of 200.\n");
-		return (1);
+		return (0);
 	}
 	table->time_to_die = ft_atol(argv[2]);
 	table->time_to_eat = ft_atol(argv[3]);
@@ -75,14 +75,14 @@ static int	initialize_input(int argc, t_table *table, char **argv)
 		table->time_to_sleep == 0)
 	{
 		printf("One or more arguments are 0.\n");
-		return (1);
+		return (0);
 	}
 	if (argc == 6)
 	{
 		table->number_of_meals = ft_atol(argv[5]);
 		table->limited_dinner = true;
 	}
-	return (0);
+	return (1);
 }
 
 t_table	*set_table(int argc, char **argv, t_table *table)
@@ -90,12 +90,14 @@ t_table	*set_table(int argc, char **argv, t_table *table)
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
-	if (initialize_input(argc, table, argv) != 0)
+	if (!initialize_input(argc, argv, table))
 	{
 		free(table);
 		return (NULL);
 	}
-	if (allocate_philos(table) != 0)
+	if (!allocate_philos(table))
 		return (NULL);
+	// if (!set_mutexes_and_forks(table))
+	// 	return (NULL);
 	return (table);
 }

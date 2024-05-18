@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 18:47:32 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/18 14:36:41 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/18 16:56:14 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ bool	argument_check(int argc, char **argv)
 		}
 		while (argv[i][j])
 		{
-			if (is_digit(argv[i][j]) == false)
+			// if (is_digit(argv[i][j]) == false)
+			if (!is_digit(argv[i][j]))
 			{
 				printf("Argv[%i][%i] is not a digit\n", i, j);
 				return (false);
