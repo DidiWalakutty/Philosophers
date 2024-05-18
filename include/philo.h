@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/18 14:43:34 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/18 16:56:00 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 typedef enum s_status
 {
 	ALIVE,
-	DEAD
+	DEAD,
+	FULL
 }	t_status;
 
 typedef enum s_activity
@@ -54,10 +55,11 @@ typedef struct s_philo
 	bool			limited_dinner;
 	long			number_of_meals;
 	bool			meal_check;
-	struct s_table	*table_struct;
 	t_status		status;
-	pthread_mutex_t	r_fork;
+	struct s_table	*table_struct;
 	pthread_t		thread;
+	pthread_mutex_t	philo_fork;	// or r_fork? It's the philo's fork
+	pthread_mutex_t	*l_fork;
 }	t_philo;
 
 typedef struct s_table
@@ -85,5 +87,6 @@ long	ft_atol(char *str);
 // Initalize
 t_table	*set_table(int argc, char **argv, t_table *table);
 int		allocate_philos(t_table *table);
+int		set_mutexes(t_table *table);
 
 #endif
