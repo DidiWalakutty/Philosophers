@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:20:15 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/21 18:26:59 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/05/21 19:57:08 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	if (argc <= 5 && argc >= 6)
 	{
 		printf("Wrong amount of arguments\n");
-		return (0);
+		return (1);
 	}
 	if ((argument_check(argc - 1, argv)) == false)
 		return (1);
