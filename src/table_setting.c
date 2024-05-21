@@ -3,15 +3,17 @@
 /*                                                        ::::::::            */
 /*   table_setting.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/18 16:59:35 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/21 17:38:57 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+// We set the basics for every philosopher and give its ID.
+// Not sure if I need the variable meal_check
 static void	inform_philos(int i, t_table *table)
 {
 	table->philos[i]->id = i + 1;
@@ -24,16 +26,17 @@ static void	inform_philos(int i, t_table *table)
 	{
 		table->philos[i]->limited_dinner = true;
 		table->philos[i]->number_of_meals = table->number_of_meals;
-		table->philos[i]->meal_check = true;
+		// table->philos[i]->meal_check = true;
 	}
 	else
 	{
 		table->philos[i]->limited_dinner = false;
-		table->philos[i]->meal_check = false;
+		// table->philos[i]->meal_check = false;
 		table->philos[i]->number_of_meals = 0;
 	}
 }
 
+// Allocate memory for table->philos and each philosopher in it.
 int	allocate_philos(t_table *table)
 {
 	int	i;
@@ -59,6 +62,7 @@ int	allocate_philos(t_table *table)
 	return (1);
 }
 
+// Check and set all argv's in our table struct.
 static int	initialize_input(int argc, char **argv, t_table *table)
 {
 	table->num_of_philos = ft_atol(argv[1]);
@@ -85,6 +89,7 @@ static int	initialize_input(int argc, char **argv, t_table *table)
 	return (1);
 }
 
+// Preparing the table by initalizing the input and allocate the philos, mutexes and forks.
 t_table	*set_table(int argc, char **argv, t_table *table)
 {
 	table = malloc(sizeof(t_table));
@@ -97,7 +102,7 @@ t_table	*set_table(int argc, char **argv, t_table *table)
 	}
 	if (!allocate_philos(table))
 		return (NULL);
-	// if (!set_mutexes_and_forks(table))
-	// 	return (NULL);
+	if (!set_mutexes_and_forks(table))
+		return (NULL);
 	return (table);
 }

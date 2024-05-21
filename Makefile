@@ -4,10 +4,11 @@ NAME 	= philo
 CFLAGS	= -Wall -Werror -Wextra -g
 CFLAGS += -fsanitize=adders -g
 RM		= rm -rf
+SRCDIR	= src/
 
 # Source Files
-SRC =	./src/main.c \
-#				./src/
+SRC =	main.c table_settings.c mutexes.c \
+		utils_1.c utils_2.c \
 
 OBJ		= $(addprefix $(OBJDIR)/, $(notdir $(SRC:.c=.o)))
 OBJDIR	= obj

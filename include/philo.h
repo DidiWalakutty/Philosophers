@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   philo.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/18 16:56:00 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/21 19:51:38 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,19 @@ typedef struct s_time
 typedef struct s_philo
 {
 	long			id;
+	pthread_mutex_t	status_sync_mutex;
+	t_status		status;
+	pthread_mutex_t	time_sync_mutex;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
-	long			last_eat;
+	struct s_table	*table_struct;
 	bool			limited_dinner;
 	long			number_of_meals;
-	bool			meal_check;
-	t_status		status;
-	struct s_table	*table_struct;
 	pthread_t		thread;
 	pthread_mutex_t	philo_fork;	// or r_fork? It's the philo's fork
 	pthread_mutex_t	*l_fork;
+	// bool			meal_check;
 }	t_philo;
 
 typedef struct s_table
@@ -75,11 +76,14 @@ typedef struct s_table
 }	t_table;
 
 // Functions
-// Utils  
+// Utils_1
 int		ft_strlen(char *str);
 bool	is_digit(int num);
-void	free_philos(int i, t_table *table);
 
+// Utils_2
+void	free_philos(int i, t_table *table);
+void	destroy_sync_mutex(t_table *table, int status, int mutex);
+void	destroy_fork_mutex(t_table *table, int i);
 // Checks
 bool	argument_check(int argc, char **argv);
 long	ft_atol(char *str);
@@ -87,6 +91,6 @@ long	ft_atol(char *str);
 // Initalize
 t_table	*set_table(int argc, char **argv, t_table *table);
 int		allocate_philos(t_table *table);
-int		set_mutexes(t_table *table);
+int		set_mutexes_and_forks(t_table *table);
 
 #endif
