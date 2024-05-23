@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 17:37:58 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/23 18:58:14 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 
 // printf zelf protecten met eigen mutex lock!!!
 // exit_error is verboden
-# include <string.h>	// memset
-# include <stdlib.h>	// malloc, free
-# include <unistd.h>	// write, usleep
 # include <stdio.h>		// printf
+# include <stdlib.h>	// malloc, free
+# include <string.h>	// memset
+# include <unistd.h>	// write, usleep
 # include <sys/time.h>	// gettimeofday
-# include <fcntl.h>		// macro to open files (O_CREAT, O_WRONLY, O_RDONLY)
 # include <pthread.h>	// thread and mutex
 # include <stdbool.h>	// booleans
-# include <stdint.h>	// cross-compilers
 
 typedef enum s_status
 {
@@ -92,5 +90,6 @@ long	ft_atol(char *str);
 t_table	*set_table(int argc, char **argv);
 int		allocate_philos(t_table *table);
 int		set_mutexes_and_forks(t_table *table);
+long	get_time(void);
 
 #endif

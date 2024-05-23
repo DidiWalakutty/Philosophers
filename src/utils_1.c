@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 18:47:32 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 17:37:50 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/23 18:59:00 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,9 @@ bool	is_digit(int num)
 		return (true);
 	else
 		return (false);
+}
+
+long	get_time(void)
+{
+	
 }

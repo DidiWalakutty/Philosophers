@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 18:43:20 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/23 18:58:23 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,6 @@ t_table	*set_table(int argc, char **argv)
 		free_philos(table->num_of_philos - 1, table);
 		return (NULL);
 	}
+	table->time_started = get_time();
 	return (table);
 }
