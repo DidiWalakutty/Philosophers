@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils_2.c                                          :+:    :+:            */
+/*   utils_free_and_destroy.c                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: marvin <marvin@student.42.fr>                +#+                     */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 18:56:38 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/21 19:52:11 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/05/23 18:42:31 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	free_philos(int i, t_table *table)
+void	free_philos(int num_of_philos, t_table *table)
 {
-	while (i >= 0)
+	int	i;
+
+	i = 0;
+
+	while (i < num_of_philos)
 	{
 		free(table->philos[i]);
-		i--;
+		i++;
 	}
 	free(table->philos);
 	free(table);

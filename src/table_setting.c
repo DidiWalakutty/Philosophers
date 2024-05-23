@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 17:37:13 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/23 18:43:20 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	allocate_philos(t_table *table)
 	if (!table->philos)
 	{
 		printf("Malloc failure!\n");
+		free(table->philos);
+		free(table);
 		return (0);
 	}
 	while (i < table->num_of_philos)
@@ -98,10 +100,13 @@ t_table	*set_table(int argc, char **argv)
 	if (!table)
 		return (NULL);
 	if (!initialize_input(argc, argv, table))
-		return (free(table), NULL);
+		return (NULL);
 	if (!allocate_philos(table))
-		return (free(table), NULL);
+		return (NULL);
 	if (!set_mutexes_and_forks(table))
-		return (free_philos(table->num_of_philos - 1, table), NULL);
+	{
+		free_philos(table->num_of_philos - 1, table);
+		return (NULL);
+	}
 	return (table);
 }

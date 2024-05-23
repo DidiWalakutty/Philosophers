@@ -14,7 +14,6 @@ SRCFILES =	main.c table_setting.c mutexes.c \
 			utils_1.c utils_free_and_destroy.c \
 
 SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
-# $(addprefix $(OBJDIR)/, $(notdir $(SRC:.c=.o)))
 
 # Colors
 RESET = \033[0m
@@ -48,3 +47,6 @@ fclean: clean
 	@echo "$(RED) 🗑️     Cleaned up remaining files   🗑️$(RESET)\n\n"
 
 re: fclean all
+
+run: $(NAME)
+	valgrind --leak-check=full -s ./$(NAME)

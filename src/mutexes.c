@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/18 16:36:24 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 16:11:46 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/23 18:09:08 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ static int	place_forks(t_table	*table)
 	if (i == 0)
 		return (1);
 	table->philos[i]->l_fork = &table->philos[0]->philo_fork;
+	for (int i = 0; i < table->num_of_philos; i++) 
+	{
+        printf("Philosopher %ld: philo_fork address = %p, l_fork address = %p\n",
+               table->philos[i]->id, (void *)&table->philos[i]->philo_fork,
+               (void *)table->philos[i]->l_fork);
+	}
 	return (1);
 }
 
