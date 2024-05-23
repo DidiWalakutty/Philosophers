@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: marvin <marvin@student.42.fr>                +#+                     */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:20:15 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/21 19:57:08 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/05/23 17:38:03 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int	main(int argc, char **argv)
 {
 	t_table	*table;
 
-	if (argc <= 5 && argc >= 6)
+	if (argc != 5 && argc != 6)
 	{
 		printf("Wrong amount of arguments\n");
-		return (1);
+		return (0);
 	}
-	if ((argument_check(argc - 1, argv)) == false)
-		return (1);
-	table = set_table(argc, argv, table);
+	if ((argument_check(argv)) == false)
+		return (0);
+	table = set_table(argc, argv);
 	if (!table)
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }

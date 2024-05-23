@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   table_setting.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: marvin <marvin@student.42.fr>                +#+                     */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/21 17:38:57 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/05/23 17:37:13 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-// We set the basics for every philosopher and give its ID.
+// We set the basics for every philosopher and give each its ID.
 // Not sure if I need the variable meal_check
 static void	inform_philos(int i, t_table *table)
 {
@@ -90,19 +90,18 @@ static int	initialize_input(int argc, char **argv, t_table *table)
 }
 
 // Preparing the table by initalizing the input and allocate the philos, mutexes and forks.
-t_table	*set_table(int argc, char **argv, t_table *table)
+t_table	*set_table(int argc, char **argv)
 {
+	t_table *table;
+
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
 	if (!initialize_input(argc, argv, table))
-	{
-		free(table);
-		return (NULL);
-	}
+		return (free(table), NULL);
 	if (!allocate_philos(table))
-		return (NULL);
+		return (free(table), NULL);
 	if (!set_mutexes_and_forks(table))
-		return (NULL);
+		return (free_philos(table->num_of_philos - 1, table), NULL);
 	return (table);
 }

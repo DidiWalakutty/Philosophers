@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   philo.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: marvin <marvin@student.42.fr>                +#+                     */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/21 19:51:38 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/05/23 17:37:58 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ void	free_philos(int i, t_table *table);
 void	destroy_sync_mutex(t_table *table, int status, int mutex);
 void	destroy_fork_mutex(t_table *table, int i);
 // Checks
-bool	argument_check(int argc, char **argv);
+bool	argument_check(char **argv);
 long	ft_atol(char *str);
 
 // Initalize
-t_table	*set_table(int argc, char **argv, t_table *table);
+t_table	*set_table(int argc, char **argv);
 int		allocate_philos(t_table *table);
 int		set_mutexes_and_forks(t_table *table);
 

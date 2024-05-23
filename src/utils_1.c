@@ -3,17 +3,17 @@
 /*                                                        ::::::::            */
 /*   utils_1.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: marvin <marvin@student.42.fr>                +#+                     */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 18:47:32 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/21 17:14:51 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/05/23 17:37:50 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 // Need to check for MAX int?
-bool	argument_check(int argc, char **argv)
+bool	argument_check(char **argv)
 {
 	int	i;
 	int	j;

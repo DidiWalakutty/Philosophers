@@ -1,19 +1,21 @@
 NAME 	= philo
 
 # Configuration
-CFLAGS	= -Wall -Werror -Wextra -g
-CFLAGS += -fsanitize=adders -g
+CFLAGS	= -Wall -Werror -Wextra -pthread -g3
+CFLAGS += -fsanitize=address
 RM		= rm -rf
 SRCDIR	= src/
+OBJDIR	= obj/
+HEADER	= ./include/philo.h
+PHILO = philo
 
 # Source Files
-SRC =	main.c table_settings.c mutexes.c \
-		utils_1.c utils_2.c \
+SRCFILES =	main.c table_setting.c mutexes.c \
+			utils_1.c utils_free_and_destroy.c \
 
-OBJ		= $(addprefix $(OBJDIR)/, $(notdir $(SRC:.c=.o)))
-OBJDIR	= obj
+SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
+# $(addprefix $(OBJDIR)/, $(notdir $(SRC:.c=.o)))
 
-# Colors
 # Colors
 RESET = \033[0m
 YELLOW = \33[1;43m
@@ -22,16 +24,27 @@ RED=\033[0;31m
 PURPLE=\033[45m
 CORAL=\033[38;2;255;127;80m
 
+.PHONY: all clean fclean re
+
 # Objectives
-all: $(OBJDIR) $(NAME)
+all: $(PHILO)
+
+$(PHILO): $(SRCOBJ)
+	cc $(CFLAGS) $(SRCOBJ) -o $(PHILO)
 	@echo "\n$(PURPLE)✨ Compilation for Philosophers done ✨ $(RESET)\n\n"
 
+$(OBJDIR)%.o: $(SRCDIR)%.c
+	@mkdir -p obj
+	@cc -c $(CFLAGS) -o $@ $<
 
 # Cleaning
 clean:
+	$(RM) $(SRCOBJ)
+	$(RM) -r $(OBJDIR)
+	@echo "\n$(CORAL)🧹    Removed all .o files and its directory   🧹$(RESET)\n\n"
 
 fclean: clean
+	@$(RM) $(PHILO)
+	@echo "$(RED) 🗑️     Cleaned up remaining files   🗑️$(RESET)\n\n"
 
 re: fclean all
-
-.PHONY: all libft libmlx clean fclean re
