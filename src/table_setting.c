@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/27 19:56:46 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/27 20:31:23 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ long	get_time(void)
 	long	time_ms;
 
 	gettimeofday(&time, NULL);
-		return();
+		return( );
 	time_ms = (time.tv_sec )
 }
 

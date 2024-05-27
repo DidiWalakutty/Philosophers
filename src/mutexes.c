@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/18 16:36:24 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 18:48:18 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/27 20:31:41 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	sync_mutexes(t_table *table)
 int	set_mutexes_and_forks(t_table *table)
 {
 	if (!sync_mutexes(table))
-		return (0);
+		return (0);antwerpen
 	if (!place_forks(table))
 		return (0);
 	return (1);

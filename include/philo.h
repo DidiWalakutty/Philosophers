@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/27 18:38:30 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/27 20:31:28 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	philo_fork;	// or r_fork? It's the philo's fork
 	pthread_mutex_t	*l_fork;
-	// bool			meal_check;
+	// bool			meal_check; 
 }	t_philo;
 
 typedef struct s_table
