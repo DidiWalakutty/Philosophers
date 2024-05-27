@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 18:58:14 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/27 18:38:30 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ typedef struct s_philo
 typedef struct s_table
 {
 	t_philo		**philos;
-	long		time_started;
 	long		num_of_philos;
 	long		time_to_die;
 	long		time_to_eat;
 	long		time_to_sleep;
 	long		number_of_meals;
+	long		start_time;
 	bool		limited_dinner;
 }	t_table;
 

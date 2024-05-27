@@ -6,11 +6,21 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 18:58:23 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/27 19:56:46 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+long	get_time(void)
+{
+	struct	timeval	time;
+	long	time_ms;
+
+	gettimeofday(&time, NULL);
+		return();
+	time_ms = (time.tv_sec )
+}
 
 // We set the basics for every philosopher and give each its ID.
 // Not sure if I need the variable meal_check
@@ -26,12 +36,10 @@ static void	inform_philos(int i, t_table *table)
 	{
 		table->philos[i]->limited_dinner = true;
 		table->philos[i]->number_of_meals = table->number_of_meals;
-		// table->philos[i]->meal_check = true;
 	}
 	else
 	{
 		table->philos[i]->limited_dinner = false;
-		// table->philos[i]->meal_check = false;
 		table->philos[i]->number_of_meals = 0;
 	}
 }
@@ -46,7 +54,6 @@ int	allocate_philos(t_table *table)
 	if (!table->philos)
 	{
 		printf("Malloc failure!\n");
-		free(table->philos);
 		free(table);
 		return (0);
 	}
@@ -108,6 +115,6 @@ t_table	*set_table(int argc, char **argv)
 		free_philos(table->num_of_philos - 1, table);
 		return (NULL);
 	}
-	table->time_started = get_time();
+	table->start_time = get_time();
 	return (table);
 }

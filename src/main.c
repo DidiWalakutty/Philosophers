@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:20:15 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 18:45:00 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/27 19:35:28 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int	main(int argc, char **argv)
 	table = set_table(argc, argv);
 	if (!table)
 		return (0);
+	// start simulatoin: create threads and join them.
 	return (1);
 }
