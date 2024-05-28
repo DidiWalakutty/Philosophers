@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   dinner.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/09 16:20:15 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/28 13:37:52 by diwalaku      ########   odam.nl         */
+/*   Created: 2024/05/28 13:26:31 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/05/28 13:44:23 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+int	begin_feast(t_table *table)
 {
-	t_table	*table;
+	int	i;
 
-	if (argc != 5 && argc != 6)
-	{
-		printf("Wrong amount of arguments\n");
-		return (0);
-	}
-	if ((argument_check(argv)) == false)
-		return (0);
-	table = set_table(argc, argv);
-	if (!table)
-		return (0);
-	// start simulatoin: create threads and join them. 
-	if (!begin_feast(table))
-		return (0);
-	return (1);
+	table->start_time = get_time();
+
 }

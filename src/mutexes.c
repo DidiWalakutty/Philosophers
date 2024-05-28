@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/18 16:36:24 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/27 20:31:41 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/28 13:41:20 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int	place_forks(t_table	*table)
 	{
 		if (pthread_mutex_init(&table->philos[i]->philo_fork, NULL) != 0)
 		{
-			destroy_sync_mutex(table, table->num_of_philos, table->num_of_philos);
+			destroy_sync_mutex(table, table->num_of_philos, \
+								table->num_of_philos);
 			destroy_fork_mutex(table, i);
 			return (0);
 		}
@@ -39,13 +40,6 @@ static int	place_forks(t_table	*table)
 	if (i == 0)
 		return (1);
 	table->philos[i]->l_fork = &table->philos[0]->philo_fork;
-	// // Check if forks are connected correctly to their neighbor
-	// for (int i = 0; i < table->num_of_philos; i++) 
-	// {
-    //     printf("Philosopher %ld: philo_fork address = %p, l_fork address = %p\n",
-    //            table->philos[i]->id, (void *)&table->philos[i]->philo_fork,
-    //            (void *)table->philos[i]->l_fork);
-	// }
 	return (1);
 }
 
@@ -76,7 +70,7 @@ static int	sync_mutexes(t_table *table)
 int	set_mutexes_and_forks(t_table *table)
 {
 	if (!sync_mutexes(table))
-		return (0);antwerpen
+		return (0);
 	if (!place_forks(table))
 		return (0);
 	return (1);

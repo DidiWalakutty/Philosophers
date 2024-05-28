@@ -10,7 +10,8 @@ PHILO = philo
 
 # Source Files
 SRCFILES =	main.c table_setting.c mutexes.c \
-			utils_1.c utils_free_and_destroy.c \
+			utils_general.c utils_free_and_destroy.c \
+			utils_dinner.c dinner.c \
 
 SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
 

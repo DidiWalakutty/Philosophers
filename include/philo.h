@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/27 20:31:28 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:07:09 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ typedef enum s_activity
 	DIE
 }	t_activity;
 
-typedef struct s_time
-{
-}	t_data;
+// typedef struct s_time
+// {
+// }	t_data;
 
 typedef struct s_philo
 {
@@ -91,5 +91,17 @@ t_table	*set_table(int argc, char **argv);
 int		allocate_philos(t_table *table);
 int		set_mutexes_and_forks(t_table *table);
 long	get_time(void);
+
+// Dinner
+int		begin_feast(t_table *table);
+
+
+// // Check for "place forks" function: if forks are connected correctly to their neighbor
+// for (int i = 0; i < table->num_of_philos; i++) 
+// {
+//     printf("Philosopher %ld: philo_fork address = %p, l_fork address = %p\n",
+//            table->philos[i]->id, (void *)&table->philos[i]->philo_fork,
+//            (void *)table->philos[i]->l_fork);
+// }
 
 #endif

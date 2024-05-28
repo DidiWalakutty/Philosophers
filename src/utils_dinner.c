@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   utils_dinner.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/09 16:20:15 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/28 13:37:52 by diwalaku      ########   odam.nl         */
+/*   Created: 2024/05/28 13:29:58 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/05/28 14:06:20 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+long	get_time(void)
 {
-	t_table	*table;
+	struct timeval	time;
+	long			time_ms;
 
-	if (argc != 5 && argc != 6)
-	{
-		printf("Wrong amount of arguments\n");
-		return (0);
-	}
-	if ((argument_check(argv)) == false)
-		return (0);
-	table = set_table(argc, argv);
-	if (!table)
-		return (0);
-	// start simulatoin: create threads and join them. 
-	if (!begin_feast(table))
-		return (0);
-	return (1);
+	gettimeofday(&time, NULL);
+		return( );
+	time_ms = (time.tv_sec )
 }

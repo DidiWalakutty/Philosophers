@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/20 18:56:38 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/23 18:42:31 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/05/28 13:43:07 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	free_philos(int num_of_philos, t_table *table)
 	int	i;
 
 	i = 0;
-
 	while (i < num_of_philos)
 	{
 		free(table->philos[i]);
