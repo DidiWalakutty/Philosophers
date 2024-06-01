@@ -1,34 +1,32 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   philo.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/04/09 16:10:01 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/28 14:07:09 by diwalaku      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-// printf zelf protecten met eigen mutex lock!!!
-// exit_error is verboden
-# include <stdio.h>		// printf
+# include <stdio.h>
 # include <stdlib.h>	// malloc, free
 # include <string.h>	// memset
 # include <unistd.h>	// write, usleep
 # include <sys/time.h>	// gettimeofday
 # include <pthread.h>	// thread and mutex
 # include <stdbool.h>	// booleans
+// printf zelf protecten met eigen mutex lock!!!
+// exit_error is verboden
 
 typedef enum s_status
 {
-	ALIVE,
+	ALIVE,	
 	DEAD,
 	FULL
 }	t_status;
+
+typedef enum s_mutex_type
+{
+	STATUS,
+	TIME,
+	PRINT,
+	FORK,
+}	t_mutex_type;
+
 
 typedef enum s_activity
 {
@@ -39,23 +37,20 @@ typedef enum s_activity
 	DIE
 }	t_activity;
 
-// typedef struct s_time
-// {
-// }	t_data;
-
 typedef struct s_philo
 {
-	long			id;
-	pthread_mutex_t	status_sync_mutex;
+	struct s_table	*table_struct;
 	t_status		status;
-	pthread_mutex_t	time_sync_mutex;
+	long			id;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
-	struct s_table	*table_struct;
 	bool			limited_dinner;
 	long			number_of_meals;
+	long			last_meal;
 	pthread_t		thread;
+	pthread_mutex_t	status_mutex;
+	pthread_mutex_t	time_mutex;
 	pthread_mutex_t	philo_fork;	// or r_fork? It's the philo's fork
 	pthread_mutex_t	*l_fork;
 	// bool			meal_check; 
@@ -63,14 +58,16 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	t_philo		**philos;
-	long		num_of_philos;
-	long		time_to_die;
-	long		time_to_eat;
-	long		time_to_sleep;
-	long		number_of_meals;
-	long		start_time;
-	bool		limited_dinner;
+	pthread_mutex_t	print_lock;
+	t_philo			**philos;
+	long			num_of_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			number_of_meals;
+	long			start_time;
+	bool			limited_dinner;
+	// pthread_mutex_t mutex_lock; ??
 }	t_table;
 
 // Functions
@@ -79,9 +76,10 @@ int		ft_strlen(char *str);
 bool	is_digit(int num);
 
 // Utils_2
-void	free_philos(int i, t_table *table);
-void	destroy_sync_mutex(t_table *table, int status, int mutex);
-void	destroy_fork_mutex(t_table *table, int i);
+void	free_philos(t_table *table, int i);
+void	join_and_free_philosophers(t_table *table, int current_id);
+void	destroy_mutex_type(t_table *table, t_mutex_type type, int i);
+
 // Checks
 bool	argument_check(char **argv);
 long	ft_atol(char *str);
@@ -93,7 +91,9 @@ int		set_mutexes_and_forks(t_table *table);
 long	get_time(void);
 
 // Dinner
-int		begin_feast(t_table *table);
+int			begin_feast(t_table *table);
+void		set_last_eat(t_philo *philo);
+t_status	check_state(t_philo *philo);
 
 
 // // Check for "place forks" function: if forks are connected correctly to their neighbor

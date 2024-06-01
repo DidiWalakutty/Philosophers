@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   table_setting.c                                    :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/05/28 14:00:48 by diwalaku      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   table_setting.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/03 18:08:03 by diwalaku          #+#    #+#             */
+/*   Updated: 2024/06/01 22:48:11 by diwalaku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	allocate_philos(t_table *table)
 		table->philos[i] = malloc(sizeof(t_philo));
 		if (!table->philos[i])
 		{
-			free_philos(i, table);
+			free_philos(table, i);
 			return (0);
 		}
 		inform_philos(i, table);
@@ -102,7 +102,7 @@ t_table	*set_table(int argc, char **argv)
 		return (NULL);
 	if (!set_mutexes_and_forks(table))
 	{
-		free_philos(table->num_of_philos - 1, table);
+		free_philos(table, table->num_of_philos - 1);
 		return (NULL);
 	}
 	table->start_time = get_time();
