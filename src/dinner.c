@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 21:43:29 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/02 00:01:35 by diwalaku         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:16:24 by diwalaku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	*meditation_cycle(void *param)
 	// sith_ritual_cycle
 	// elven_wisdom_ritual
 	// elven_reflection_cycle.
+// Meditation Cycle and Monitoring co-exist!!!
 int	begin_feast(t_table *table)
 {
 	int	i;
