@@ -11,7 +11,8 @@ PHILO = philo
 # Source Files
 SRCFILES =	main.c table_setting.c mutexes.c \
 			utils_general.c utils_free_and_destroy.c \
-			utils_dinner.c dinner.c check_philoc.c \
+			utils_dinner.c dinner.c check_philos.c \
+			activities.c \
 
 SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
 

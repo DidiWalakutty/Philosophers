@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:36:24 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/01 22:37:52 by diwalaku         ###   ########.fr       */
+/*   Updated: 2024/06/01 23:08:46 by diwalaku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	place_forks(t_table	*table)
 	{
 		if (pthread_mutex_init(&table->philos[i]->philo_fork, NULL) != 0)
 		{
-			destroy_sync_mutex(table, table->num_of_philos, \
-								table->num_of_philos);
-			destroy_fork_mutex(table, i);
+			destroy_mutex_type(table, STATUS, table->num_of_philos);
+			destroy_mutex_type(table, TIME, table->num_of_philos);
+			destroy_mutex_type(table, FORKS, i);
 			return (0);
 		}
 		i++;
@@ -53,12 +53,12 @@ static int	sync_mutexes(t_table *table)
 	{
 		if (pthread_mutex_init(&table->philos[i]->status_mutex, NULL) != 0)
 		{
-			destroy_sync_mutex(table, i, -1);
+			destroy_mutex_type(table, STATUS, i);
 			return (0);
 		}
 		if (pthread_mutex_init(&table->philos[i]->time_mutex, NULL) != 0)
 		{
-			destroy_sync_mutex(table, -1, i);
+			destroy_mutex_type(table, TIME, i);
 			return (0);
 		}
 		i++;
@@ -76,7 +76,8 @@ int	set_mutexes_and_forks(t_table *table)
 		return (0);
 	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
 	{
-		destroy_sync_mutex(table, table->num_of_philos, table->num_of_philos);
+		destroy_mutex_type(table, STATUS, table->num_of_philos);
+		destroy_mutex_type(table, TIME, table->num_of_philos);
 		return (0);
 	}
 	return (1);

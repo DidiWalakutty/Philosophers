@@ -24,7 +24,7 @@ typedef enum s_mutex_type
 	STATUS,
 	TIME,
 	PRINT,
-	FORK,
+	FORKS,
 }	t_mutex_type;
 
 
@@ -71,18 +71,19 @@ typedef struct s_table
 }	t_table;
 
 // Functions
-// Utils_1
+// Utils
+int		print_error(char *message);
+bool	argument_check(char **argv);
+long	ft_atol(char *str);
 int		ft_strlen(char *str);
 bool	is_digit(int num);
+void	print_message(t_philo *philo, t_activity activity);
 
-// Utils_2
+// Utils_Free_and_Destroy
 void	free_philos(t_table *table, int i);
 void	join_and_free_philosophers(t_table *table, int current_id);
 void	destroy_mutex_type(t_table *table, t_mutex_type type, int i);
-
-// Checks
-bool	argument_check(char **argv);
-long	ft_atol(char *str);
+void	ft_sleep(t_philo *philo, long sleeptime);
 
 // Initalize
 t_table	*set_table(int argc, char **argv);
@@ -94,6 +95,10 @@ long	get_time(void);
 int			begin_feast(t_table *table);
 void		set_last_eat(t_philo *philo);
 t_status	check_state(t_philo *philo);
+
+// Activities
+void	dinner_for_one(t_philo *philo);
+void	set_last_meal(t_philo *philo);
 
 
 // // Check for "place forks" function: if forks are connected correctly to their neighbor

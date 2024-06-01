@@ -6,11 +6,17 @@
 /*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 18:47:32 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/01 21:44:28 by diwalaku         ###   ########.fr       */
+/*   Updated: 2024/06/01 23:20:46 by diwalaku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+int	print_error(char *message)
+{
+	write(2, message, ft_strlen(message));
+	return (0);
+}
 
 // Need to check for MAX int?
 bool	argument_check(char **argv)

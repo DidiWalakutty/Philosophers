@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 21:43:29 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/01 22:09:32 by diwalaku         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:01:35 by diwalaku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,17 @@ void	*meditation_cycle(void *param)
 
 	this_philo = (t_philo *) param;
 	if (this_philo->id % 2 != 0)
-		usleep((this_philo->time_to_die / 4) * 1000);
+		usleep((this_philo->time_to_die / 4) * 1000);	// or ft_sleep?
 	while (check_state(this_philo) == ALIVE)
 	{
-		eating(this_philo);
-		sleeping(this_philo);
+		// eating(this_philo);
+		// sleeping(this_philo);
 		print_message(this_philo, THINK);
 		if (this_philo->table_struct->num_of_philos % 2 != 0)
 			usleep(this_philo->time_to_die / 4);
 	}
-	return (NULL)	
+	return (NULL);
 }
-
 
 // Set a function for 1 philo?
 //
@@ -48,17 +47,17 @@ int	begin_feast(t_table *table)
 	i = 0;
 	if (table->num_of_philos == 1)
 	{
-		dinner_for_one();
+		dinner_for_one(table->philos[i]);
 		return (1);
 	}
 	table->start_time = get_time();
 	while (i < table->num_of_philos)
 	{
-		set_last_meal(table->philos);
+		set_last_meal(table->philos[i]);
 		if (pthread_create(&table->philos[i]->thread, NULL, \
 							&meditation_cycle, table->philos[i]) != 0)
 		{
-			printf("Couldn't create thread for philo: %ld.\n", table->philos[i]);
+			printf("Couldn't create thread for philo\n");
 			join_and_free_philosophers(table, i);
 			return (0);
 		}

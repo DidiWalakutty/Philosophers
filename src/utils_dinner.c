@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   utils_dinner.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: marvin <marvin@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/05/28 13:29:58 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/06/01 18:59:00 by anonymous     ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/philo.h"
 
 // Calculates the time in milliseconds since the epoch.
@@ -42,4 +30,41 @@ void	set_last_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->time_mutex);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->time_mutex);
+}
+
+void	print_message(t_philo *philo, t_activity activity)
+{
+	long		current_time;
+
+	const char	*type[] = {
+		[EAT] = "is eating",
+		[FORK] = "has taken a fork",
+		[SLEEP] = "is sleeping",
+		[THINK] = "is thinking",
+	};
+	pthread_mutex_lock(&philo->table_struct->print_lock);
+	if (check_state(philo) != ALIVE)
+	{
+		pthread_mutex_unlock(&philo->table_struct->print_lock);
+		return ;
+	}
+	current_time = get_time() - philo->table_struct->start_time;
+	printf("%ld %lu %s\n", current_time, philo->id, type[activity]);
+	pthread_mutex_unlock(&philo->table_struct->print_lock);
+}
+
+// Loops until sleeptime is over.
+void	ft_sleep(t_philo *philo, long sleeptime)
+{
+	long	current_time;
+	long	time_since;
+
+	current_time = get_time();
+	while (time_since < sleeptime)	
+	{
+		if (check_state(philo) != ALIVE)
+			return ;
+		usleep(50);
+		time_since = get_time() - current_time;
+	}
 }
