@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 21:43:29 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/02 00:16:24 by diwalaku         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:14:57 by diwalaku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int	begin_feast(t_table *table)
 			return (0);
 		}
 	}
+	// TODO: monitor the meditation cycle.
 	return (1);
 }
