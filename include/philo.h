@@ -98,7 +98,7 @@ t_status	check_state(t_philo *philo);
 
 // Activities
 void	dinner_for_one(t_philo *philo);
-void	set_last_meal(t_philo *philo);
+void	set_latest_meal(t_philo *philo);
 
 
 // // Check for "place forks" function: if forks are connected correctly to their neighbor

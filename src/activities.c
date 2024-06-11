@@ -19,7 +19,7 @@ void	dinner_for_one(t_philo *philo)
 	print_message(philo, DIE);
 }
 
-void	set_last_meal(t_philo *philo)
+void	set_latest_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->time_mutex);
 	philo->last_meal = get_time();
