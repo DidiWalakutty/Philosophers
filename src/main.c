@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/01 21:43:38 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/01 21:58:37 by diwalaku         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/01 21:43:38 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/06/15 14:43:40 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 		printf("Unable to set the table\n");
 		return (0);
 	}
-	// start simulatoin: create threads and join them. 
+	// start simulation: create threads and join them. 
 	if (!begin_feast(table))
 		return (0);
 	return (1);

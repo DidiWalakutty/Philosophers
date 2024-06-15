@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 21:43:29 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/06/07 18:36:28 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/06/15 14:43:11 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	*meditation_cycle(void *param)
 		usleep((this_philo->time_to_die / 4) * 1000);	// or ft_sleep?
 	while (check_state(this_philo) == ALIVE)
 	{
+		// TODO: eating, sleeping.
 		eating(this_philo);
 		sleeping(this_philo);
 		print_message(this_philo, THINK);
