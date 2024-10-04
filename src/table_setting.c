@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   table_setting.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 18:08:03 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/01 22:48:11 by diwalaku         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   table_setting.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/10/04 21:23:06 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,17 @@ int	allocate_philos(t_table *table)
 static int	initialize_input(int argc, char **argv, t_table *table)
 {
 	table->num_of_philos = ft_atol(argv[1]);
-	if (table->num_of_philos == 0 || table->num_of_philos > 200)
-	{
-		printf("Philos should be a minimum of 1 and maximum of 200.\n");
-		return (0);
-	}
+	if (table->num_of_philos == 0 || table->num_of_philos > MAX_PHILOS)
+		return (printf("Philos should be a min of 1 and max of 200.\n"), 0);
 	table->time_to_die = ft_atol(argv[2]);
 	table->time_to_eat = ft_atol(argv[3]);
 	table->time_to_sleep = ft_atol(argv[4]);
+	if ((table->time_to_die < 60) || (table->time_to_sleep < 60))
+		return (printf("Time_to_die and/or time_to_sleep is too short.\n"), 0);
 	table->limited_dinner = false;
 	if (table->time_to_die == 0 || table->time_to_eat == 0 || \
 		table->time_to_sleep == 0)
-	{
-		printf("One or more arguments are 0.\n");
-		return (0);
-	}
+		return (printf("One or more arguments are 0.\n"), 0);
 	if (argc == 6)
 	{
 		table->number_of_meals = ft_atol(argv[5]);
@@ -88,7 +84,8 @@ static int	initialize_input(int argc, char **argv, t_table *table)
 	return (1);
 }
 
-// Preparing the table by initalizing the input and allocate the philos, mutexes and forks.
+// Preparing the table by initalizing the input and allocate 
+// the philos, mutexes and forks.
 t_table	*set_table(int argc, char **argv)
 {
 	t_table	*table;

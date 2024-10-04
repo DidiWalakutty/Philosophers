@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 21:43:38 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/06/15 14:43:40 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/04 21:21:42 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,19 @@ int	main(int argc, char **argv)
 {
 	t_table	*table;
 
+	table = NULL;
 	if (argc != 5 && argc != 6)
-	{
-		printf("Wrong amount of arguments\n");
-		return (0);
-	}
-	if ((argument_check(argv)) == false)
+		return (printf("Wrong amount of arguments\n"), 0);
+	if ((argument_check(argc, argv)) == false)
 		return (0);
 	table = set_table(argc, argv);
-	if (!table)
-	{
-		printf("Unable to set the table\n");
-		return (0);
-	}
+	// if (!table)
+	// {
+	// 	printf("Unable to set the table\n");
+	// 	return (0);
+	// }
 	// start simulation: create threads and join them. 
-	if (!begin_feast(table))
-		return (0);
+	// if (!begin_feast(table))
+	// 	return (0);
 	return (1);
 }

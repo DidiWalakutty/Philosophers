@@ -1,85 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils_general.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 18:47:32 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/01 23:20:46 by diwalaku         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   utils_general.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/04/20 18:47:32 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/10/04 21:16:40 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	print_error(char *message)
-{
-	write(2, message, ft_strlen(message));
-	return (0);
-}
-
-// Need to check for MAX int?
-bool	argument_check(char **argv)
+bool	argument_check(int count, char **argv)
 {
 	int	i;
-	int	j;
+	int	num;
 
 	i = 1;
-	while (argv[i])
+	while (i < count)
 	{
-		j = 0;
-		if (ft_strlen(argv[i]) == 0)
-		{
-			printf("Argv[%i] is empty.\n", i);
+		num = ft_atoi(argv[i]);
+		if (!num)
 			return (false);
-		}
-		while (argv[i][j])
-		{
-			if (!is_digit(argv[i][j]))
-			{
-				printf("Argv[%i][%i] is not a digit\n", i, j);
-				return (false);
-			}
-			j++;
-		}
+		if (num > INT_MAX)
+			return ((printf("Argv[%i] is bigger than MAX_INT\n", i), false));
+		if (num < 0 || num < INT_MIN)
+			return ((printf("Argv[%i] is smaller than 0 or MIN_INT\n", i)), \
+					false);
+		if (ft_strlen(argv[i]) == 0)
+			return (printf("Argv[%i] is empty\n", i), false);
+		if (!only_digits(argv[i]))
+			return (printf("Argv[%i] contains a non-digit char\n", i), false);
 		i++;
 	}
 	return (true);
-}
-
-long	ft_atol(char *str)
-{
-	long	i;
-	long	num;
-
-	i = 0;
-	num = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		num = num * 10 + str[i] - '0';
-		i++;
-	}
-	return (num);
-}
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
-
-bool	is_digit(int num)
-{
-	if (num >= '0' && num <= '9')
-		return (true);
-	else
-		return (false);
 }

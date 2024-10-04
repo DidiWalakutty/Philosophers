@@ -9,10 +9,12 @@ HEADER	= ./include/philo.h
 PHILO = philo
 
 # Source Files
-SRCFILES =	main.c table_setting.c mutexes.c \
-			utils_general.c utils_free_and_destroy.c \
-			utils_dinner.c dinner.c check_philos.c \
-			activities.c \
+SRCFILES =	main.c \
+			utils_general.c utils_numbers.c utils_helper.c \
+			table_setting.c mutexes.c \
+			utils_free_and_destroy.c utils_dinner.c \
+			# dinner.c check_philos.c \
+			# activities.c \
 
 SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
 
@@ -31,7 +33,7 @@ all: $(PHILO)
 
 $(PHILO): $(SRCOBJ)
 	cc $(CFLAGS) $(SRCOBJ) -o $(PHILO)
-	@echo "\n$(PURPLE)✨ Compilation for Philosophers done ✨ $(RESET)\n\n"
+	@echo "\n$(PURPLE)✨ Compilation for Philosophers done ✨ $(RESET)\n"
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	@mkdir -p obj
@@ -41,11 +43,11 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 clean:
 	$(RM) $(SRCOBJ)
 	$(RM) -r $(OBJDIR)
-	@echo "\n$(CORAL)🧹    Removed all .o files and its directory   🧹$(RESET)\n\n"
+	@echo "\n$(CORAL)🧹    Removed all .o files and its directory   🧹$(RESET)"
 
 fclean: clean
 	@$(RM) $(PHILO)
-	@echo "$(RED) 🗑️     Cleaned up remaining files   🗑️$(RESET)\n\n"
+	@echo "$(RED) 🗑️     Cleaned up remaining files   🗑️$(RESET)\n"
 
 re: fclean all
 

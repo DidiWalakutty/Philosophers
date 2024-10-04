@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 21:43:29 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/06/15 14:43:11 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/04 20:48:58 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	*meditation_cycle(void *param)
 
 	this_philo = (t_philo *) param;
 	if (this_philo->id % 2 != 0)
-		usleep((this_philo->time_to_die / 4) * 1000);	// or ft_sleep?
+		// this or ft_sleep?
+		usleep((this_philo->time_to_die / 4) * 1000);
 	while (check_state(this_philo) == ALIVE)
 	{
 		// TODO: eating, sleeping.
@@ -44,7 +45,8 @@ void	*meditation_cycle(void *param)
 
 // Meditation Cycle and Monitoring co-exist!!!
 // Creates threads for each philo and each goes into their own meditation cycle.
-// It'll set-up a continuously monitoring loop as soon as all threads are created.
+// It'll set-up a continuously monitoring loop as soon 
+// as all threads are created.
 int	begin_feast(t_table *table)
 {
 	int	i;

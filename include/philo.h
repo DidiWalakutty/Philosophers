@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   philo.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: diwalaku <diwalaku@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/04 21:15:17 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/10/04 21:15:54 by diwalaku      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -12,12 +23,16 @@
 // printf zelf protecten met eigen mutex lock!!!
 // exit_error is verboden
 
-typedef enum s_status
+# define MAX_PHILOS	200
+# define INT_MIN	-2147483648
+# define INT_MAX	2147483647
+
+typedef enum s_state
 {
 	ALIVE,	
 	DEAD,
 	FULL
-}	t_status;
+}	t_state;
 
 typedef enum s_mutex_type
 {
@@ -26,7 +41,6 @@ typedef enum s_mutex_type
 	PRINT,
 	FORKS,
 }	t_mutex_type;
-
 
 typedef enum s_activity
 {
@@ -40,7 +54,7 @@ typedef enum s_activity
 typedef struct s_philo
 {
 	struct s_table	*table_struct;
-	t_status		status;
+	t_state			status;
 	long			id;
 	long			time_to_die;
 	long			time_to_eat;
@@ -70,38 +84,54 @@ typedef struct s_table
 	// pthread_mutex_t mutex_lock; ??
 }	t_table;
 
-// Functions
-// Utils
-int		print_error(char *message);
-bool	argument_check(char **argv);
-long	ft_atol(char *str);
-int		ft_strlen(char *str);
-bool	is_digit(int num);
-void	print_message(t_philo *philo, t_activity activity);
+//-------------------------------------------------------------------------//
+//                                  Functions                              //
+//-------------------------------------------------------------------------//
 
-// Utils_Free_and_Destroy
-void	free_philos(t_table *table, int i);
-void	join_and_free_philosophers(t_table *table, int current_id);
-void	destroy_mutex_type(t_table *table, t_mutex_type type, int i);
-void	ft_sleep(t_philo *philo, long sleeptime);
-
-// Initalize
 t_table	*set_table(int argc, char **argv);
+int		begin_feast(t_table *table);
+void	dinner_for_one(t_philo *philo);
+
+//-------------------------------------------------------------------------//
+//                                  Dinner                                 //
+//-------------------------------------------------------------------------//
+
+void	set_last_eat(t_philo *philo);
+void	set_latest_meal(t_philo *philo);
+t_state	check_state(t_philo *philo);
+
+//-------------------------------------------------------------------------//
+//                                    Set                                  //
+//-------------------------------------------------------------------------//
+
 int		allocate_philos(t_table *table);
 int		set_mutexes_and_forks(t_table *table);
+void	destroy_mutex_type(t_table *table, t_mutex_type type, int i);
+void	ft_sleep(t_philo *philo, long sleeptime);
 long	get_time(void);
 
-// Dinner
-int			begin_feast(t_table *table);
-void		set_last_eat(t_philo *philo);
-t_status	check_state(t_philo *philo);
+//-------------------------------------------------------------------------//
+//                                  Helpers                                //
+//-------------------------------------------------------------------------//
 
-// Activities
-void	dinner_for_one(t_philo *philo);
-void	set_latest_meal(t_philo *philo);
+bool	argument_check(int argc, char **argv);
+void	print_message(t_philo *philo, t_activity activity);
+int		print_error(char *message);
+int		ft_strlen(char *str);
+bool	is_digit(int num);
+bool	only_digits(char *str);
+long	ft_atol(char *str);
+int		ft_atoi(const char *str);
 
+//-------------------------------------------------------------------------//
+//                               Free and Error                            //
+//-------------------------------------------------------------------------//
 
-// // Check for "place forks" function: if forks are connected correctly to their neighbor
+void	free_philos(t_table *table, int i);
+void	join_and_free_philosophers(t_table *table, int current_id);
+
+// // Check for "place forks" function: if forks are 
+// 		connected correctly to their neighbor
 // for (int i = 0; i < table->num_of_philos; i++) 
 // {
 //     printf("Philosopher %ld: philo_fork address = %p, l_fork address = %p\n",

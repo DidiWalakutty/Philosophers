@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mutexes.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: diwalaku <diwalaku@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/18 16:36:24 by diwalaku          #+#    #+#             */
-/*   Updated: 2024/06/01 23:08:46 by diwalaku         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   mutexes.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/18 16:36:24 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/10/04 20:49:16 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ static int	place_forks(t_table	*table)
 		table->philos[i]->l_fork = &table->philos[i + 1]->philo_fork;
 		i++;
 	}
-	if (i == 0)	
+	if (i == 0)
 		return (1);
 	table->philos[i]->l_fork = &table->philos[0]->philo_fork;
 	return (1);
 }
 
-// Create the synchronization mutexes for each philo and destroys them if not successfull.
+// Create the synchronization mutexes for each philo and 
+// destroys them if not successfull.
 static int	sync_mutexes(t_table *table)
 {
 	int	i;

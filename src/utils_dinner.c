@@ -35,13 +35,13 @@ void	set_last_eat(t_philo *philo)
 void	print_message(t_philo *philo, t_activity activity)
 {
 	long		current_time;
-
 	const char	*type[] = {
-		[EAT] = "is eating",
-		[FORK] = "has taken a fork",
-		[SLEEP] = "is sleeping",
-		[THINK] = "is thinking",
+	[EAT] = "is eating",
+	[FORK] = "has taken a fork",
+	[SLEEP] = "is sleeping",
+	[THINK] = "is thinking",
 	};
+
 	pthread_mutex_lock(&philo->table_struct->print_lock);
 	if (check_state(philo) != ALIVE)
 	{
@@ -60,7 +60,7 @@ void	ft_sleep(t_philo *philo, long sleeptime)
 	long	time_since;
 
 	current_time = get_time();
-	while (time_since < sleeptime)	
+	while (time_since < sleeptime)
 	{
 		if (check_state(philo) != ALIVE)
 			return ;
