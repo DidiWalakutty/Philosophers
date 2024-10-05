@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/04 21:15:17 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/04 21:15:54 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/05 20:08:04 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_philo
 	pthread_mutex_t	time_mutex;
 	pthread_mutex_t	philo_fork;	// or r_fork? It's the philo's fork
 	pthread_mutex_t	*l_fork;
-	// bool			meal_check; 
+	bool			fully_ate; 
 }	t_philo;
 
 typedef struct s_table
@@ -81,6 +81,7 @@ typedef struct s_table
 	long			number_of_meals;
 	long			start_time;
 	bool			limited_dinner;
+	bool			fully_ate;
 	// pthread_mutex_t mutex_lock; ??
 }	t_table;
 

@@ -6,14 +6,14 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/03 18:08:03 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/04 21:23:06 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/05 20:08:16 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 // We set the basics for every philosopher and give each its ID.
-// Not sure if I need the variable meal_check
+// Not sure if I need the variable meal_check.
 static void	inform_philos(int i, t_table *table)
 {
 	table->philos[i]->id = i + 1;
@@ -62,7 +62,7 @@ int	allocate_philos(t_table *table)
 }
 
 // Check and set all argv's in our table struct.
-static int	initialize_input(int argc, char **argv, t_table *table)
+static void	initialize_input(int argc, char **argv, t_table *table)
 {
 	table->num_of_philos = ft_atol(argv[1]);
 	if (table->num_of_philos == 0 || table->num_of_philos > MAX_PHILOS)
@@ -73,15 +73,14 @@ static int	initialize_input(int argc, char **argv, t_table *table)
 	if ((table->time_to_die < 60) || (table->time_to_sleep < 60))
 		return (printf("Time_to_die and/or time_to_sleep is too short.\n"), 0);
 	table->limited_dinner = false;
-	if (table->time_to_die == 0 || table->time_to_eat == 0 || \
-		table->time_to_sleep == 0)
-		return (printf("One or more arguments are 0.\n"), 0);
+	table->fully_ate = false;
+	if (table->time_to_eat == 0)
+		return (printf("Time to eat should be higher than 0.\n"), 0);
 	if (argc == 6)
 	{
 		table->number_of_meals = ft_atol(argv[5]);
 		table->limited_dinner = true;
 	}
-	return (1);
 }
 
 // Preparing the table by initalizing the input and allocate 
@@ -93,8 +92,7 @@ t_table	*set_table(int argc, char **argv)
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
-	if (!initialize_input(argc, argv, table))
-		return (NULL);
+	initialize_input(argc, argv, table);
 	if (!allocate_philos(table))
 		return (NULL);
 	if (!set_mutexes_and_forks(table))

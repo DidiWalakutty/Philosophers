@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/18 16:36:24 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/04 20:49:16 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/05 19:54:16 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static int	place_forks(t_table	*table)
 		i++;
 	}
 	i = 0;
-	while (i < table->num_of_philos - 1) // -1 for neighbor on the left.
+	// -1 for neighbor on the left.
+	while (i < table->num_of_philos - 1)
 	{
 		table->philos[i]->l_fork = &table->philos[i + 1]->philo_fork;
 		i++;
