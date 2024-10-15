@@ -10,16 +10,10 @@ PHILO = philo
 
 # Source Files
 SRCFILES =	main.c \
+			input_check.c table_setting.c \
+			utils_functions.c utils_print.c \
 
 SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
-
-# Colors
-RESET = \033[0m
-YELLOW = \33[1;43m
-BLUE=\033[1;44m
-RED=\033[0;31m
-PURPLE=\033[45m
-CORAL=\033[38;2;255;127;80m
 
 .PHONY: all clean fclean re
 
