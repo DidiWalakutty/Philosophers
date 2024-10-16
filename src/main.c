@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
 int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	if (argc < 5 || argc > 6)
-		return ((printf(RED "Error: Incorrect number of arguments\n" RST)), 1);
+	if (check_input(argc, argv) == false)
+		return (1);
 	// 1 - fill table
 	set_table(&table, argv);
 	

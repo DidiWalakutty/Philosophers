@@ -10,10 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
 const char	*print_error(const char *message)
 {
 	printf(RED "Error: %s\n" RST, message);
 	return (NULL);
+}
+
+bool	error_bool(char *message)
+{
+	printf(RED "Error: %s\n" RST, message);
+	return (false);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
 static bool	negative_input(char **argv)
 {
@@ -34,15 +34,13 @@ static bool	negative_input(char **argv)
 // adjust our input to microseconds.
 bool	set_table(t_table *table, char **argv)
 {
-	if (negative_input(argv) == true)
-		return (false);
 	table->philo_nbr = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]) * MICRO_SECONDS;
 	table->time_to_eat = ft_atol(argv[3]) * MICRO_SECONDS;
 	table->time_to_sleep = ft_atol(argv[4]) * MICRO_SECONDS;
 	if (table->time_to_die < MIN_SEC || table->time_to_eat < MIN_SEC || \
 		table->time_to_sleep < MIN_SEC)
-		return ((printf("Use timestamps bigger than 60 ms\n")), false);
+		return (error_bool("Use timestamps bigger than 60 ms\n"));
 	if (argv[5])
 	{
 		table->num_limit_meals = ft_atol(argv[5]);

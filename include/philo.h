@@ -29,7 +29,7 @@
 // Can we use INT_MAX?
 // Converting miliseconds to microseconds by * 1000
 // We want a minimum time_to of 60 miliseconds, so 60 * 1000.
-# define INT_MAX 2147483647
+// # define INT_MAX 2147483647
 # define MICRO_SECONDS 1000
 # define MIN_SEC 60000
 
@@ -90,6 +90,7 @@ typedef struct s_table
 /*                                  Functions                                 */
 /* ************************************************************************** */
 
+bool	check_input(int argc, char **argv);
 bool	set_table(t_table *table, char **argv);
 
 
@@ -98,6 +99,7 @@ bool	set_table(t_table *table, char **argv);
 /* ************************************************************************** */
 
 const char	*print_error(const char *message);
-long		ft_atol(char *str);
+bool		error_bool(char *message);
+// long		ft_atol(char *str);
 
 #endif

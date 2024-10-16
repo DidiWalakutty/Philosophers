@@ -1,16 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   input_check.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/15 17:24:13 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/15 17:24:13 by diwalaku      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        ::::::::            */
+// /*   input_check.c                                      :+:    :+:            */
+// /*                                                     +:+                    */
+// /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
+// /*                                                   +#+                      */
+// /*   Created: 2024/10/15 17:24:13 by diwalaku      #+#    #+#                 */
+// /*   Updated: 2024/10/15 17:24:13 by diwalaku      ########   odam.nl         */
+// /*                                                                            */
+// /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
 static bool	is_digit(char c)
 {
@@ -22,38 +22,62 @@ static bool	is_space(char c)
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-static const char	*check_input(const char *str)
+static bool	check_validity(char *str)
 {
-	int			digit_count;
-	const char	*valid_num;
+	int	i;
+	int	digit_count;
 
+	i = 0;
 	digit_count = 0;
-	valid_num = str;
-	while (is_space(*str))
-		++str;
-	if (*str == '+')
-		++str;
-	else if (*str == '-')
-		return (print_error("This is a negative number"));
-	if (!is_digit(*str))
-		return (print_error("This is not a number"));
-	valid_num = str;
-	while (is_digit(*str++))
-		++digit_count;
+	while (is_space(str[i]))
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
+		return (error_bool("You're argument contains a negative number"));
+	if (!is_digit(str[i]))
+		return (error_bool("This iput contains a non-digit"));
+	while (is_digit(str[i]))
+	{
+		digit_count++;
+		i++;
+	}
 	if (digit_count > 10)
-		return (print_error("This number is bigger than INT_MAX"));
-	return (valid_num);
+		return (error_bool("This number is bigger than INT_MAX"));
+	return (true);
 }
 
-long	ft_atol(char *str)
+bool	check_input(int argc, char **argv)
+{
+	int	i;
+
+	i = 1;
+	if (argc < 5 || argc > 6)
+		return (error_bool("Error: Incorrect number of arguments"));
+	while (argv[i])
+	{
+		if (check_validity(argv[i]) == false)
+			return (false);
+		i++;
+	}
+	return (true);	
+}
+
+static const char	*update_position(const char *str)
+{
+	const char	*valid_num;
+
+	valid_num = str;
+	while ()
+}
+
+long	ft_atol(const char *str)
 {
 	long		num;
-	const char 	*new_str;
+	const char	*new_str;
 
 	num = 0;
-	new_str = check_input(str);
-	if (!new_str)
-		return (-1);
+	new_str = update_position(str);
 	while (is_digit(*new_str))
 		num = (num * 10) + (*new_str++ - '0');
 	if (num > INT_MAX)
