@@ -83,6 +83,7 @@ typedef struct s_table
 	bool	end_simulation;		// when a philo dies or all philos are full
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
+	bool	limited_dinner;
 
 }	t_table;
 

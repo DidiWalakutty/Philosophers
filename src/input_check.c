@@ -73,14 +73,16 @@ static const char	*update_position(const char *str)
 
 long	ft_atol(const char *str)
 {
-	long		num;
-	const char	*new_str;
+	long	num;
 
 	num = 0;
-	new_str = update_position(str);
-	while (is_digit(*new_str))
-		num = (num * 10) + (*new_str++ - '0');
+	while (is_space(*str))
+		str++;
+	if (*str == '+')
+		str++;
+	while (is_digit(*str))
+		num = (num * 10) + (*str++ - '0');
 	if (num > INT_MAX)
-		return ((printf(RED "Error: Number is > than INT_MAX\n" RST)), -1);
+		return (-1);
 	return (num);
 }
