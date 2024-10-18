@@ -60,15 +60,7 @@ bool	check_input(int argc, char **argv)
 			return (false);
 		i++;
 	}
-	return (true);	
-}
-
-static const char	*update_position(const char *str)
-{
-	const char	*valid_num;
-
-	valid_num = str;
-	while ()
+	return (true);
 }
 
 long	ft_atol(const char *str)

@@ -54,6 +54,17 @@ typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
 
 
+typedef enum e_code
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH,
+}	t_code;
+
 typedef struct s_fork
 {
 	t_mtx	fork;
@@ -66,25 +77,24 @@ typedef struct s_philo
 	long		meals_counter;
 	bool		full;
 	long		last_meal_time;	// time since last meal. MS, so long
-	t_fork		*left_fork;
 	t_fork		*right_fork;
+	t_fork		*left_fork;
 	pthread_t	thread_id;	// a philo is a thread
 	t_table		*table;
 }	t_philo;
 
 typedef struct s_table
 {
-	long	philo_nbr;
+	long	num_of_philos;
 	long	time_to_die;
 	long	time_to_eat;
 	long	time_to_sleep;
 	long	num_limit_meals;	// if we have a max number of meals
+	bool	limited_dinner;
 	long	start_simulation;	// when sim started
 	bool	end_simulation;		// when a philo dies or all philos are full
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
-	bool	limited_dinner;
-
 }	t_table;
 
 /* ************************************************************************** */
@@ -99,8 +109,14 @@ bool	set_table(t_table *table, char **argv);
 /*                              Helper Functions                              */
 /* ************************************************************************** */
 
-const char	*print_error(const char *message);
-bool		error_bool(char *message);
-// long		ft_atol(char *str);
+long	ft_atol(char *str);
+bool	initialize_input(t_table *table, char **argv);
+
+/* ************************************************************************** */
+/*                               Free and Errors                              */
+/* ************************************************************************** */
+
+bool	error_bool(char *message);
+char	*print_error(char *message);
 
 #endif

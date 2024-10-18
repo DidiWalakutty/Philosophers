@@ -10,8 +10,9 @@ PHILO = philo
 
 # Source Files
 SRCFILES =	main.c \
-			input_check.c table_setting.c \
-			utils_functions.c utils_print.c \
+			input_check.c init_input.c \
+			table_setting.c \
+			utils_free.c utils_print.c \
 
 SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
 
