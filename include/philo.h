@@ -93,6 +93,8 @@ typedef struct s_table
 	bool	limited_dinner;
 	long	start_simulation;	// when sim started
 	bool	end_simulation;		// when a philo dies or all philos are full
+	bool	threads_ready;		// for synchronization of philos in meditation cycle.
+	t_mtx	table_mutex;		// avoid races while reading from table
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
 }	t_table;
@@ -118,5 +120,6 @@ bool	initialize_input(t_table *table, char **argv);
 
 bool	error_bool(char *message);
 char	*print_error(char *message);
+void	free_allocation_forks(t_table *table, int count);
 
 #endif
