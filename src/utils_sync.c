@@ -25,12 +25,19 @@ long	get_time(t_time unit)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL))
+	{
+		printf("Failed retrieving gettimeofday\n");
 		return (-1);
+	}
 	if (unit == MILLISECOND)
 		return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	if (unit == MICROSECOND)
 		return ((tv.tv_sec * 1000000) + tv.tv_usec);
-	return (-1);
+	else
+	{
+		printf("Gettimeofday failed\n");
+		return (-1);
+	}
 }
 
 // This function makes sure that each philo in its own
