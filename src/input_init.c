@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_input.c                                       :+:    :+:            */
+/*   input_init.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 16:58:59 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/21 23:09:23 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/23 19:39:00 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// Checks whether the input meets minimum standards.
+// ft_atol sets the value to -1 in case of > INT_MAX
 static bool	validate_table_values(t_table *table)
 {
 	if (table->num_of_philos == -1 || table->time_to_die == -1 || \
@@ -27,13 +29,14 @@ static bool	validate_table_values(t_table *table)
 	return (true);
 }
 
+// We set and validate all given values.
 bool	initialize_input(t_table *table, char **argv)
 {
 	table->num_of_philos = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]) * MICRO_SECONDS;
 	table->time_to_eat = ft_atol(argv[3]) * MICRO_SECONDS;
 	table->time_to_sleep = ft_atol(argv[4]) * MICRO_SECONDS;
-	table->threads_ready = false;
+	table->philos_ready = false;
 	table->limited_dinner = false;
 	table->num_limit_meals = -1;
 	if (argv[5])

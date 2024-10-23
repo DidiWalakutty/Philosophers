@@ -1,7 +1,7 @@
 NAME 	= philo
 
 # Configuration
-CFLAGS	= -Wall -Werror -Wextra -pthread -g3 #-fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -pthread -g3 -I ./include #-fsanitize=address
 RM		= rm -rf
 SRCDIR	= src/
 OBJDIR	= obj/
@@ -11,8 +11,9 @@ PHILO = philo
 # Source Files
 SRCFILES =	main.c \
 			input_check.c input_init.c \
-			table_setting.c dinner.c synchronization.c \
-			utils_free.c utils_print.c utils_time.c \
+			table_setting.c dinner.c \
+			utils_free.c utils_print.c utils_sync.c \
+			utils_locks_and_updates.c \
 
 SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
 

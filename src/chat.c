@@ -28,7 +28,7 @@ typedef struct s_table
 	bool	limited_dinner;
 	long	start_simulation;	// when sim started
 	bool	end_simulation;		// when a philo dies or all philos are full
-	bool	threads_ready;		// for synchronization of philos in meditation cycle.
+	bool	philos_ready;		// for synchronization of philos in meditation cycle.
 	t_mtx	table_mutex;		// avoid races while reading from table
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
@@ -89,9 +89,9 @@ void	begin_feast(t_table *table)
 		}
 		// start simulation
 		table->start_simulation = gettime(MILLISECOND);
-		// We are going to lock the table_mutex, set the bool threads_ready to true and unlock the mutex.
+		// We are going to lock the table_mutex, set the bool philos_ready to true and unlock the mutex.
 		// threads are ready
-		set_bool(&table->table_mutex, &table->threads_ready, true);
+		set_bool(&table->table_mutex, &table->philos_ready, true);
 		// wait for everyone
 		i = 0;
 		while (i < table->num_of_philos)
@@ -141,7 +141,7 @@ void	*dinner_simulation(void *data)
 // Spinlock to synchronize philos start.
 void	wait_all_threads(t_table *table)
 {
-	while (!get_bool(&table->table_mutex, table->threads_ready))
+	while (!get_bool(&table->table_mutex, table->philos_ready))
 		;
 }
 

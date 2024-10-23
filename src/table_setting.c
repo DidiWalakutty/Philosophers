@@ -12,13 +12,15 @@
 
 #include "philo.h"
 
-// Even/odd fork assignment.
-static void	*hand_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
+// Even/odd fork assignment that ensures each philo gets two forks in a
+// circular manner, while avoiding deadlock situations.
+// It creates an alternating order, which breaks symmetry.
+// This function only assigns the forks.
+static void	hand_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 {
 	int	num_of_philos;
 
 	num_of_philos = philo->table->num_of_philos;
-	// right fork is their own fork
 	if (philo->id % 2 == 0)
 	{
 		philo->right_fork = &forks[philo_pos];
@@ -31,6 +33,7 @@ static void	*hand_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 	}
 }
 
+// Give each philo it's id and basic information.
 static void	inform_philos(t_table *table)
 {
 	int		i;
@@ -48,6 +51,9 @@ static void	inform_philos(t_table *table)
 	}
 }
 
+// Allocate the structs for philos and forks.
+// Create a mutex for each philo/fork.
+// Inform/set all values for each philo.
 static int	allocate_philos(t_table *table)
 {
 	int	i;
@@ -57,7 +63,7 @@ static int	allocate_philos(t_table *table)
 	table->philos = malloc(sizeof(t_philo) * table->num_of_philos);
 	if (!table->philos)
 		return ((free(table), 0));
-	if (pthread_mutex_init(&table->table_mutex, NULL != 0))
+	if (pthread_mutex_init(&table->table_mutex, NULL) != 0)
 		return ((free_table(table, 1)), 0);
 	table->forks = malloc(sizeof(t_fork) * table->num_of_philos);
 	if (!table->forks)
@@ -73,9 +79,8 @@ static int	allocate_philos(t_table *table)
 	return (1);
 }
 
-// The time we receive as input is in miliseconds.
-// However, the usleep() wants microseconds, so we need to
-// adjust our input to microseconds.
+// This function sets everything we need before we
+// start the actual simulation.
 bool	set_table(t_table *table, char **argv)
 {
 	if (initialize_input(table, argv) == false)

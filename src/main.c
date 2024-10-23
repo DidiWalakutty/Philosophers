@@ -18,8 +18,6 @@ int	main(int argc, char **argv)
 
 	if (check_input(argc, argv) == false)
 		return (1);
-	// 1 - fill table
-	// 2 - init data -> malloc it all
 	if (set_table(&table, argv) == false)
 		return (1);
 	// 3 - start dinner simulation

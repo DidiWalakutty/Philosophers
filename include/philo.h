@@ -26,13 +26,6 @@
 // dan dat een andere thread zijn printf aanroept.
 // exit_error is verboden
 
-// Can we use INT_MAX?
-// Converting miliseconds to microseconds by * 1000
-// We want a minimum time_to of 60 miliseconds, so 60 * 1000.
-// # define INT_MAX 2147483647
-# define MICRO_SECONDS 1000
-# define MIN_SEC 60000
-
 /* ************************************************************************** */
 /*                                ANSI Colors                                 */
 /* ************************************************************************** */
@@ -49,21 +42,16 @@
 
 
 typedef pthread_mutex_t	t_mtx;
+typedef enum e_time		t_time;
 typedef struct s_fork	t_fork;
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
 
-
-typedef enum e_code
+typedef enum e_time
 {
-	LOCK,
-	UNLOCK,
-	INIT,
-	DESTROY,
-	CREATE,
-	JOIN,
-	DETACH,
-}	t_code;
+	MILLISECOND,
+	MICROSECOND,
+}	t_time;
 
 typedef struct s_fork
 {
@@ -79,7 +67,7 @@ typedef struct s_philo
 	long		last_meal_time;	// time since last meal. MS, so long
 	t_fork		*right_fork;
 	t_fork		*left_fork;
-	pthread_t	thread_id;	// a philo is a thread
+	pthread_t	thread_id;		// a philo is a thread
 	t_table		*table;
 }	t_philo;
 
@@ -93,26 +81,39 @@ typedef struct s_table
 	bool	limited_dinner;
 	long	start_simulation;	// when sim started
 	bool	end_simulation;		// when a philo dies or all philos are full
-	bool	threads_ready;		// for synchronization of philos in meditation cycle.
+	bool	philos_ready;		// for syncing of philos in meditation cycle.
 	t_mtx	table_mutex;		// avoid races while reading from table
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
 }	t_table;
 
 /* ************************************************************************** */
-/*                                  Functions                                 */
+/*                             Main Functions                                 */
 /* ************************************************************************** */
 
 bool	check_input(int argc, char **argv);
 bool	set_table(t_table *table, char **argv);
-
+void	begin_feast(t_table *table);
+void	*meditation_cycle(void *data);
+long	get_time(t_time unit);
 
 /* ************************************************************************** */
 /*                              Helper Functions                              */
 /* ************************************************************************** */
 
-long	ft_atol(char *str);
 bool	initialize_input(t_table *table, char **argv);
+void	wait_for_all_philos(t_table *table);
+void	update_bool(t_mtx *mutex, bool *bool_condition, bool new_status);
+void	update_long(t_mtx *mutex, long *long_value, long new_value);
+bool	read_bool(t_mtx *mutex, bool *bool_condition);
+long	read_long(t_mtx *mutex, long *value);
+
+/* ************************************************************************** */
+/*                              Other Functions                               */
+/* ************************************************************************** */
+
+long	ft_atol(char *str);
+
 
 /* ************************************************************************** */
 /*                               Free and Errors                              */
@@ -120,6 +121,6 @@ bool	initialize_input(t_table *table, char **argv);
 
 bool	error_bool(char *message);
 char	*print_error(char *message);
-void	free_allocation_forks(t_table *table, int count);
+void	free_table(t_table *table, int code);
 
 #endif

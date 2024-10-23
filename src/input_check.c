@@ -22,6 +22,10 @@ static bool	is_space(char c)
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
+// We do an overal check for the given input:
+// - if digits
+// - negatives
+// - bigger than INT_MAX (> 10, ft_atol checks if it's actually INT_MAX)
 static bool	check_validity(char *str)
 {
 	int	i;
@@ -63,7 +67,7 @@ bool	check_input(int argc, char **argv)
 	return (true);
 }
 
-long	ft_atol(const char *str)
+long	ft_atol(char *str)
 {
 	long	num;
 
