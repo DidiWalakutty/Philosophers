@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 16:58:59 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/23 19:39:00 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/25 22:50:33 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static bool	validate_table_values(t_table *table)
 		return (error_bool("Number is > than INT_MAX\n"));
 	if (table->limited_dinner == true && table->num_limit_meals == -1)
 		return (error_bool("Number is > than INT_MAX\n"));
-	else if (table->time_to_die < MIN_SEC || table->time_to_eat < MIN_SEC || \
-		table->time_to_sleep < MIN_SEC)
+	else if (table->time_to_die < 60000 || table->time_to_eat < 60000 || \
+		table->time_to_sleep < 60000)
 		return (error_bool("Use timestamps bigger than 60 ms\n"));
 	if (table->limited_dinner == true && table->num_limit_meals == 0)
 		return (error_bool("Given limited meals is 0"));
@@ -30,12 +30,13 @@ static bool	validate_table_values(t_table *table)
 }
 
 // We set and validate all given values.
+// Our input is millisecs, but usleep needs microsecs.
 bool	initialize_input(t_table *table, char **argv)
 {
 	table->num_of_philos = ft_atol(argv[1]);
-	table->time_to_die = ft_atol(argv[2]) * MICRO_SECONDS;
-	table->time_to_eat = ft_atol(argv[3]) * MICRO_SECONDS;
-	table->time_to_sleep = ft_atol(argv[4]) * MICRO_SECONDS;
+	table->time_to_die = ft_atol(argv[2]) * 1000;
+	table->time_to_eat = ft_atol(argv[3]) * 1000;
+	table->time_to_sleep = ft_atol(argv[4]) * 1000;
 	table->philos_ready = false;
 	table->limited_dinner = false;
 	table->num_limit_meals = -1;

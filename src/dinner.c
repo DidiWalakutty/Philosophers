@@ -6,21 +6,60 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 17:26:51 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/23 21:20:02 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/25 22:47:29 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// This function manages the eating process for a philosopher.
+// It locks/takes both forks, logs the actions, updates meal time 
+// and count, sleeps for the eating duration, and unlocks/drops
+// the forks after handling possible meal limits.
+static void	eat(t_philo *philo)
+{
+	toggle_lock(LOCK, EATING, philo);
+	print_activity(TAKEN_FIRST_FORK, philo);
+	print_activity(TAKEN_SEC_FORK, philo);
+	update_long(&philo->monitor_mutex, &philo->last_meal_time, \
+				get_time(MILLISECOND));
+	philo->meals_counter++;
+	print_activity(EATING, philo);
+	hyper_sleep(philo->table->time_to_eat, philo->table);
+	if (philo->table->limited_dinner == true && \
+		philo->table->num_limit_meals == philo->meals_counter)
+		update_bool(&philo->monitor_mutex, &philo->full, true);
+	toggle_lock(UNLOCK, EATING, philo);
+}
+
+static void	think(t_philo *philo)
+{
+	print_activity(THINKING, philo);
+}
+
 // wait all philos, start simulation
 // endless loop philos
-//
 void	*meditation_cycle(void *data)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
 	wait_for_all_philos(philo->table);
+	// set last meal time
+	while (!dinner_finished(philo->table))
+	{
+		// is philo full?
+		if (philo->full) // TODO: thread safety
+			break ;
+		eat(philo);
+		print_activity(SLEEPING, philo);
+		hyper_sleep(philo->table->time_to_sleep, philo->table);
+		
+		// sleep -> write_status and precise usleep
+		
+		think(philo);
+	}
+	return (NULL);
 }
 
 // Creates threads for each philo and sets time of start simulation.
@@ -35,14 +74,14 @@ void	begin_feast(t_table *table)
 	int	i;
 
 	i = 0;
-	if (table->num_of_philos == 1)
-		dinner_for_one(); // TODO
-	else
-	{
+	// if (table->num_of_philos == 1)
+	// 	dinner_for_one(); // TODO
+	// else
+	// {
 		while (i < table->num_of_philos)
 		{
-			if (pthread_create(&table->philos[i].thread_id, NULL, meditation_cycle, \
-							&table->philos[i]) != 0)
+			if (pthread_create(&table->philos[i].thread_id, NULL, \
+								meditation_cycle, &table->philos[i]) != 0)
 			{
 				// delete, free and end program. May need to join before we can destroy???
 				// just return and do it there?
@@ -50,15 +89,20 @@ void	begin_feast(t_table *table)
 			}
 			i++;
 		}
+		// put start_sim and set_bool in a different function?
 		table->start_simulation = get_time(MILLISECOND);
 		if (table->start_simulation == -1)
 		{
 			// delete, free the whole thing, or just return and do it there?
 			return ;
 		}
-		set_bool(&table->table_mutex, &table->philos_ready, true);
-		i = 0;
-		while (i < table->num_of_philos)
-			// pthread_join
-	}
+		update_bool(&table->table_mutex, &table->philos_ready, true);
+		i = -1;
+		while (++i < table->num_of_philos)
+		{
+			if (pthread_join(table->philos[i].thread_id, NULL))
+				return ;
+		}
+		// if we reach this line, all philos are full.
+	// }
 }

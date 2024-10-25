@@ -12,22 +12,29 @@
 
 #include "philo.h"
 
-void	free_table(t_table *table, int code)
+void	free_table(t_table *table, int code, int processed)
 {
 	int	i;
 
-	i = 0;
-	if (code >= 1)
+	i = -1;
+	if (code >= 1 && table->philos)
+	{
+		if (code == 5)
+		{
+			while (++i < processed)
+				pthread_mutex_destroy(&table->philos[i].monitor_mutex);
+		}
 		free(table->philos);
+	}
 	if (code >= 2)
 		pthread_mutex_destroy(&table->table_mutex);
-	if (code == 3)
+	if (code >= 3)
+		pthread_mutex_destroy(&table->write_mutex);
+	i = -1;
+	if (code >= 4)
 	{
-		while (i < table->num_of_philos)
-		{
+		while (++i < processed)
 			pthread_mutex_destroy(&table->forks[i].fork);
-			i++;
-		}
 		free(table->forks);
 	}
 	free(table);

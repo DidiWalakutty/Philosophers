@@ -13,7 +13,7 @@ SRCFILES =	main.c \
 			input_check.c input_init.c \
 			table_setting.c dinner.c \
 			utils_free.c utils_print.c utils_sync.c \
-			utils_locks_and_updates.c \
+			utils_locks.c utils_updates.c \
 
 SRCOBJ	= $(SRCFILES:%.c=$(OBJDIR)%.o)
 

@@ -48,3 +48,31 @@ void	wait_for_all_philos(t_table *table)
 	while (!read_bool(&table->table_mutex, &table->philos_ready))
 		;
 }
+
+	// if sim is finished, end
+	// usleep majority of time, not CPU intesive
+	// refine last microsec with spinlock
+void	hyper_sleep(long micro_sec, t_table *table)
+{
+	long	start;
+	long	passed_time;
+	long	sleep_left;
+
+	start = get_time(MICROSECOND);
+	while (get_time(MICROSECOND) - start < micro_sec)
+	{
+		if (dinner_finished(table))
+			break ;
+		passed_time = get_time(MICROSECOND) - start;
+		sleep_left = micro_sec - passed_time;
+		// using usleep only if it's bigger than a microsec
+		if (sleep_left > 1000)
+			usleep(sleep_left / 2);
+		else
+		{
+			// spinlock while it's less than a microsec
+			while (get_time(MICROSECOND) - start < micro_sec)
+				;
+		}
+	}
+}

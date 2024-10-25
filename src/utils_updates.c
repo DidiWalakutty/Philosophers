@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/23 19:45:02 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/23 20:29:10 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/25 18:46:49 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ long	read_long(t_mtx *mutex, long *value)
 }
 
 // This function check whether or not the simulation is finished.
-bool	simulation_finished(t_table *table)
+bool	dinner_finished(t_table *table)
 {
 	return (read_bool(&table->table_mutex, &table->end_simulation));
 }

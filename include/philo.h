@@ -40,12 +40,27 @@
 #define C   "\033[1;36m"   // Bold Cyan
 #define W   "\033[1;37m"   // Bold White
 
-
 typedef pthread_mutex_t	t_mtx;
 typedef enum e_time		t_time;
 typedef struct s_fork	t_fork;
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
+
+typedef enum e_status
+{
+	TAKEN_FIRST_FORK,
+	TAKEN_SEC_FORK,
+	EATING,
+	SLEEPING,
+	THINKING,
+	DIED,
+}	t_status;
+
+typedef enum e_locker
+{
+	LOCK,
+	UNLOCK,
+}	t_locker;
 
 typedef enum e_time
 {
@@ -61,13 +76,14 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int			id;
+	int			philo_id;
 	long		meals_counter;
 	bool		full;
 	long		last_meal_time;	// time since last meal. MS, so long
 	t_fork		*right_fork;
 	t_fork		*left_fork;
 	pthread_t	thread_id;		// a philo is a thread
+	t_mtx		monitor_mutex;
 	t_table		*table;
 }	t_philo;
 
@@ -83,6 +99,7 @@ typedef struct s_table
 	bool	end_simulation;		// when a philo dies or all philos are full
 	bool	philos_ready;		// for syncing of philos in meditation cycle.
 	t_mtx	table_mutex;		// avoid races while reading from table
+	t_mtx	write_mutex;
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
 }	t_table;
@@ -96,6 +113,8 @@ bool	set_table(t_table *table, char **argv);
 void	begin_feast(t_table *table);
 void	*meditation_cycle(void *data);
 long	get_time(t_time unit);
+void	hyper_sleep(long micro_sec, t_table *table);
+void	toggle_lock(t_locker latch, t_status activity, t_philo *philo);
 
 /* ************************************************************************** */
 /*                              Helper Functions                              */
@@ -107,6 +126,8 @@ void	update_bool(t_mtx *mutex, bool *bool_condition, bool new_status);
 void	update_long(t_mtx *mutex, long *long_value, long new_value);
 bool	read_bool(t_mtx *mutex, bool *bool_condition);
 long	read_long(t_mtx *mutex, long *value);
+bool	dinner_finished(t_table *table);
+void	print_activity(t_status status, t_philo *philo);
 
 /* ************************************************************************** */
 /*                              Other Functions                               */
@@ -121,6 +142,6 @@ long	ft_atol(char *str);
 
 bool	error_bool(char *message);
 char	*print_error(char *message);
-void	free_table(t_table *table, int code);
+void	free_table(t_table *table, int code, int processed);
 
 #endif
