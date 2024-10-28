@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils_locks.c                                      :+:    :+:            */
+/*   monitor_death.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/10/25 20:52:07 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/28 16:34:30 by diwalaku      ########   odam.nl         */
+/*   Created: 2024/10/28 17:59:57 by diwalaku      #+#    #+#                 */
+/*   Updated: 2024/10/28 18:03:25 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// This function either locks or unlocks both forks.
-void	toggle_lock(t_locker latch, t_status activity, t_philo *philo)
+bool	all_threads_
+
+// 
+void	*monitoring_death(void *data)
 {
-	if (activity == EATING)
-	{
-		if (latch == LOCK)
-		{
-			pthread_mutex_lock(&philo->first_fork->fork);
-			pthread_mutex_lock(&philo->second_fork->fork);
-		}
-		else if (latch == UNLOCK)
-		{
-			pthread_mutex_unlock(&philo->first_fork->fork);
-			pthread_mutex_unlock(&philo->second_fork->fork);
-		}
-	}
+	t_table *table;
+
+	table = (t_table *)data;
+	while (!all_)
+	return (NULL);
 }
+
+// monitoring waits until all theads aren't running anymore.

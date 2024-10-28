@@ -49,9 +49,10 @@ void	wait_for_all_philos(t_table *table)
 		;
 }
 
-	// if sim is finished, end
-	// usleep majority of time, not CPU intesive
-	// refine last microsec with spinlock
+
+// A precise usleep that uses a combination of usleep (> 1 millisec)
+// and a spinlock for precise timing that also checks if the sim ended.
+// Checks if the elapsed time has reached the given sleep duration.
 void	hyper_sleep(long micro_sec, t_table *table)
 {
 	long	start;
@@ -65,12 +66,14 @@ void	hyper_sleep(long micro_sec, t_table *table)
 			break ;
 		passed_time = get_time(MICROSECOND) - start;
 		sleep_left = micro_sec - passed_time;
-		// using usleep only if it's bigger than a microsec
 		if (sleep_left > 1000)
+		{
 			usleep(sleep_left / 2);
+			if (dinner_finished(table))
+				break ;
+		}
 		else
 		{
-			// spinlock while it's less than a microsec
 			while (get_time(MICROSECOND) - start < micro_sec)
 				;
 		}

@@ -41,6 +41,7 @@
 #define W   "\033[1;37m"   // Bold White
 
 typedef pthread_mutex_t	t_mtx;
+typedef	pthread_t		pthrd_t;
 typedef enum e_time		t_time;
 typedef struct s_fork	t_fork;
 typedef struct s_philo	t_philo;
@@ -77,11 +78,11 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int			philo_id;
-	long		meals_counter;
+	long		eaten_meals;
 	bool		full;
 	long		last_meal_time;	// time since last meal. MS, so long
-	t_fork		*right_fork;
-	t_fork		*left_fork;
+	t_fork		*first_fork;
+	t_fork		*second_fork;
 	pthread_t	thread_id;		// a philo is a thread
 	t_mtx		monitor_mutex;
 	t_table		*table;
@@ -100,6 +101,7 @@ typedef struct s_table
 	bool	philos_ready;		// for syncing of philos in meditation cycle.
 	t_mtx	table_mutex;		// avoid races while reading from table
 	t_mtx	write_mutex;
+	pthrd_t	grim_reaper;		// pthread that checks if a philo has died
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
 }	t_table;
@@ -115,6 +117,7 @@ void	*meditation_cycle(void *data);
 long	get_time(t_time unit);
 void	hyper_sleep(long micro_sec, t_table *table);
 void	toggle_lock(t_locker latch, t_status activity, t_philo *philo);
+void	*monitoring_death(void *data);
 
 /* ************************************************************************** */
 /*                              Helper Functions                              */
@@ -128,6 +131,7 @@ bool	read_bool(t_mtx *mutex, bool *bool_condition);
 long	read_long(t_mtx *mutex, long *value);
 bool	dinner_finished(t_table *table);
 void	print_activity(t_status status, t_philo *philo);
+void	print_debug_activity(t_status status, t_philo *philo); // remove later
 
 /* ************************************************************************** */
 /*                              Other Functions                               */

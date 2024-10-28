@@ -23,13 +23,13 @@ static void	hand_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 	num_of_philos = philo->table->num_of_philos;
 	if (philo->philo_id % 2 == 0)
 	{
-		philo->right_fork = &forks[philo_pos];
-		philo->left_fork = &forks[(philo_pos + 1) % num_of_philos];
+		philo->first_fork = &forks[philo_pos];
+		philo->second_fork = &forks[(philo_pos + 1) % num_of_philos];
 	}
 	else
 	{
-		philo->left_fork = &forks[(philo_pos + 1) % num_of_philos];
-		philo->right_fork = &forks[philo_pos];
+		philo->first_fork = &forks[(philo_pos + 1) % num_of_philos];
+		philo->second_fork = &forks[philo_pos];
 	}
 }
 
@@ -45,7 +45,7 @@ static bool	inform_philos(t_table *table)
 		philo = table->philos + i;
 		philo->philo_id = i + 1;
 		philo->full = false;
-		philo->meals_counter = 0;
+		philo->eaten_meals = 0;
 		philo->table = table;
 		if (pthread_mutex_init(&table->philos->monitor_mutex, NULL) != 0)
 			return (free_table(table, 5, i), false);
