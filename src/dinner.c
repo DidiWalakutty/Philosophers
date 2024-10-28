@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 17:26:51 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/28 19:58:46 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/28 20:00:06 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	*meditation_cycle(void *data)
 		eat(philo);
 		print_debug_activity(SLEEPING, philo);
 		hyper_sleep(philo->table->time_to_sleep, philo->table);
-		
+
 		think(philo);
 	}
 	return (NULL);
@@ -109,8 +109,8 @@ int	begin_feast(t_table *table, int *error)
 			{
 				// if fails, error message and clean up to i's amount of philos/threads
 				// return ;
-			}
 				return (1);
+			}
 		}
 		// create onderstaand pthread_create in main??
 		if (pthread_create(&table->death, NULL, monitoring_death, table) != 0)
