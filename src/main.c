@@ -14,14 +14,19 @@
 
 int	main(int argc, char **argv)
 {
+	int		*error;
 	t_table	table;
 
+	error = 0;
 	if (check_input(argc, argv) == false)
 		return (1);
 	if (set_table(&table, argv) == false)
 		return (1);
 	// 3 - start dinner simulation
-	begin_feast(&table);
+	begin_feast(&table, error);
+	if (error > 0)
+		print_error_message(error);
+	clean_table(table);
 	// 4 - clean -> when philos are full or a philo died
 }
 

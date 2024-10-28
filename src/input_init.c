@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 16:58:59 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/25 22:50:33 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/28 19:48:47 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ bool	initialize_input(t_table *table, char **argv)
 	table->time_to_die = ft_atol(argv[2]) * 1000;
 	table->time_to_eat = ft_atol(argv[3]) * 1000;
 	table->time_to_sleep = ft_atol(argv[4]) * 1000;
+	table->allocated_num_philos = 0;
+	table->active_threads = 0;
 	table->philos_ready = false;
 	table->limited_dinner = false;
 	table->num_limit_meals = -1;

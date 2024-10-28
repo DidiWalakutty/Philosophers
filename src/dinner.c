@@ -6,11 +6,27 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 17:26:51 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/28 18:00:36 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/10/28 19:58:46 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	dinner_for_one(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	wait_for_all_philos(philo->table);
+	update_long(&philo->monitor_mutex, &philo->last_meal_time, \
+				get_time(MILLISECOND));
+	increase_active_threads(&philo->table->table_mutex, \
+				&philo->table->active_threads);
+	print_debug_activity(TAKEN_FIRST_FORK, philo);
+	while (!dinner_finished(philo->table))
+		usleep(200);
+	return (NULL);
+}
 
 // This function manages the eating process for a philosopher.
 // It locks/takes both forks, logs the actions, updates meal time 
@@ -18,9 +34,7 @@
 // the forks after handling possible meal limit.
 static void	eat(t_philo *philo)
 {
-	toggle_lock(LOCK, EATING, philo);
-	print_debug_activity(TAKEN_FIRST_FORK, philo);
-	print_debug_activity(TAKEN_SEC_FORK, philo);
+	toggle_lock_and_fork(LOCK, EATING, philo);
 	update_long(&philo->monitor_mutex, &philo->last_meal_time, \
 				get_time(MILLISECOND));
 	philo->eaten_meals++;
@@ -46,6 +60,15 @@ void	*meditation_cycle(void *data)
 
 	philo = (t_philo *)data;
 	wait_for_all_philos(philo->table);
+	update_long(&philo->monitor_mutex, &philo->last_meal_time, \
+				get_time(MILLISECOND));
+
+	// set last mealtime
+	// everytime we pass wait_for_all_philos(), we increaes the num of threads that are running.
+	increase_active_threads(&philo->table->table_mutex, \
+							&philo->table->active_threads);
+	// sync with monitoring function
+	// set and increase running_threads_num.
 	// set last meal time
 	while (!dinner_finished(philo->table))
 	{
@@ -55,8 +78,6 @@ void	*meditation_cycle(void *data)
 		eat(philo);
 		print_debug_activity(SLEEPING, philo);
 		hyper_sleep(philo->table->time_to_sleep, philo->table);
-		
-		// sleep -> write_status and precise usleep
 		
 		think(philo);
 	}
@@ -70,47 +91,44 @@ void	*meditation_cycle(void *data)
 //
 // probably want to just return and let the main do the cleaning.
 // maybe send an int error from the main to begin_feast??
-void	begin_feast(t_table *table)
+int	begin_feast(t_table *table, int *error)
 {
 	int	i;
 
-	i = 0;
-	// if (table->num_of_philos == 1)
-	// 	dinner_for_one(); // TODO
-	// else
-	// {
-		while (i < table->num_of_philos)
+	i = -1;
+	if (table->num_of_philos == 1)
+		if (pthread_create(&table->philos[0].thread_id, NULL, dinner_for_one, \
+						&table->philos[0]) != 0)
+			return (1);
+	else
+	{
+		while (++i < table->num_of_philos)
 		{
 			if (pthread_create(&table->philos[i].thread_id, NULL, \
 								meditation_cycle, &table->philos[i]) != 0)
 			{
-				printf("Couldn't create philo %i's thread\n");
-				// delete, free and end program. May need to join before we can destroy???
-				// just return and do it there?
-				return ;
+				// if fails, error message and clean up to i's amount of philos/threads
+				// return ;
 			}
-			i++;
+				return (1);
 		}
-		if (pthread_create(&table->grim_reaper, NULL, monitoring_death, table) != 0)
-		{
-			printf("Couldn't create monitor_death thread\n");
-			return ;
-		}
-		// put start_sim and set_bool in a different function?
+		// create onderstaand pthread_create in main??
+		if (pthread_create(&table->death, NULL, monitoring_death, table) != 0)
+			return (2);
 		table->start_simulation = get_time(MILLISECOND);
 		if (table->start_simulation == -1)
-		{
-			printf("Gettime failed\n");
-			// delete, free the whole thing, or just return and do it there?
-			return ;
-		}
+			return (3);
 		update_bool(&table->table_mutex, &table->philos_ready, true);
 		i = -1;
 		while (++i < table->num_of_philos)
 		{
 			if (pthread_join(table->philos[i].thread_id, NULL))
-				return ;
+				return (4);
 		}
 		// if we reach this line, all philos are full.
-	// }
+		update_bool(&table->table_mutex, &table->end_simulation, true);
+		if (pthread_join(&table->table_mutex, NULL));
+			return (4);
+	}
+	return (0);
 }

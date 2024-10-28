@@ -41,7 +41,7 @@
 #define W   "\033[1;37m"   // Bold White
 
 typedef pthread_mutex_t	t_mtx;
-typedef	pthread_t		pthrd_t;
+typedef pthread_t		t_pthrd;
 typedef enum e_time		t_time;
 typedef struct s_fork	t_fork;
 typedef struct s_philo	t_philo;
@@ -91,17 +91,19 @@ typedef struct s_philo
 typedef struct s_table
 {
 	long	num_of_philos;
+	long	allocated_num_philos; // for freeing if allocation failed???
 	long	time_to_die;
 	long	time_to_eat;
 	long	time_to_sleep;
 	long	num_limit_meals;	// if we have a max number of meals
+	long	active_threads;		// Monitors the number of active philo threads.
 	bool	limited_dinner;
 	long	start_simulation;	// when sim started
 	bool	end_simulation;		// when a philo dies or all philos are full
 	bool	philos_ready;		// for syncing of philos in meditation cycle.
 	t_mtx	table_mutex;		// avoid races while reading from table
 	t_mtx	write_mutex;
-	pthrd_t	grim_reaper;		// pthread that checks if a philo has died
+	t_pthrd	death;		// pthread that checks if a philo has died
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
 }	t_table;
@@ -112,12 +114,13 @@ typedef struct s_table
 
 bool	check_input(int argc, char **argv);
 bool	set_table(t_table *table, char **argv);
-void	begin_feast(t_table *table);
+int		begin_feast(t_table *table, int *error);
 void	*meditation_cycle(void *data);
 long	get_time(t_time unit);
 void	hyper_sleep(long micro_sec, t_table *table);
-void	toggle_lock(t_locker latch, t_status activity, t_philo *philo);
+void	toggle_lock_and_fork(t_locker latch, t_status activity, t_philo *philo);
 void	*monitoring_death(void *data);
+void	clean_table(t_table *table);
 
 /* ************************************************************************** */
 /*                              Helper Functions                              */
@@ -132,6 +135,7 @@ long	read_long(t_mtx *mutex, long *value);
 bool	dinner_finished(t_table *table);
 void	print_activity(t_status status, t_philo *philo);
 void	print_debug_activity(t_status status, t_philo *philo); // remove later
+void	increase_active_threads(t_mtx *mutex, long *philo_threads);
 
 /* ************************************************************************** */
 /*                              Other Functions                               */
