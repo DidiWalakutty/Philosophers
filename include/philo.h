@@ -114,7 +114,7 @@ typedef struct s_table
 
 bool	check_input(int argc, char **argv);
 bool	set_table(t_table *table, char **argv);
-int		begin_feast(t_table *table, int *error);
+int		begin_feast(t_table *table);
 void	*meditation_cycle(void *data);
 long	get_time(t_time unit);
 void	hyper_sleep(long micro_sec, t_table *table);

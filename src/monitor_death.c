@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/28 17:59:57 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/28 19:53:40 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/01 17:07:09 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static bool	philo_died(t_philo *philo)
 		return (false);
 	elapsed = get_time(MILLISECOND) - read_long(&philo->monitor_mutex, \
 												&philo->last_meal_time);
+	// Convert back to milliseconds
 	time_to_die = philo->table->time_to_die / 1000;
-
 	if (elapsed > time_to_die)
 		return (true);
 	return (false);

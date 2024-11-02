@@ -72,7 +72,7 @@ static bool	allocate_philos(t_table *table)
 		return ((free_table(table, 2, 0)), false);
 	table->forks = malloc(sizeof(t_fork) * table->num_of_philos);
 	if (!table->forks)
-		return ((free_table(table, 4, 0)), false);
+		return ((free_table(table, 3, 0)), false);
 	while (i < table->num_of_philos)
 	{
 		if (pthread_mutex_init(&table->forks[i].fork, NULL) != 0)

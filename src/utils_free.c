@@ -71,3 +71,15 @@ void	free_table(t_table *table, int code, int processed)
 	}
 	free(table);
 }
+
+void	join_threads(t_table *table, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		pthread_join(table->philos[j].thread_id);
+		j++;
+	}
+}

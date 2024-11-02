@@ -6,13 +6,13 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 17:26:51 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/28 20:00:06 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/01 18:07:51 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	dinner_for_one(void *arg)
+static void	*dinner_for_one(void *arg)
 {
 	t_philo	*philo;
 
@@ -22,9 +22,11 @@ static void	dinner_for_one(void *arg)
 				get_time(MILLISECOND));
 	increase_active_threads(&philo->table->table_mutex, \
 				&philo->table->active_threads);
+	// Aren't acutally taking a fork, just writing it.
 	print_debug_activity(TAKEN_FIRST_FORK, philo);
+	// last_meal_time won't be updated
 	while (!dinner_finished(philo->table))
-		usleep(200);
+		usleep(200); // 200 or should be time_to_sleep???
 	return (NULL);
 }
 
@@ -89,9 +91,8 @@ void	*meditation_cycle(void *data)
 // All med_cycles run simultaneously to this function.
 //
 //
-// probably want to just return and let the main do the cleaning.
-// maybe send an int error from the main to begin_feast??
-int	begin_feast(t_table *table, int *error)
+// call clean function, sent i with it, return.
+int	begin_feast(t_table *table)
 {
 	int	i;
 
@@ -109,12 +110,12 @@ int	begin_feast(t_table *table, int *error)
 			{
 				// if fails, error message and clean up to i's amount of philos/threads
 				// return ;
-				return (1);
+				return (join_threads(table, i), 1);
 			}
 		}
 		// create onderstaand pthread_create in main??
 		if (pthread_create(&table->death, NULL, monitoring_death, table) != 0)
-			return (2);
+			return (join_threads(table, i), 1);
 		table->start_simulation = get_time(MILLISECOND);
 		if (table->start_simulation == -1)
 			return (3);
@@ -127,7 +128,8 @@ int	begin_feast(t_table *table, int *error)
 		}
 		// if we reach this line, all philos are full.
 		update_bool(&table->table_mutex, &table->end_simulation, true);
-		if (pthread_join(&table->table_mutex, NULL));
+		// do we need to pthread_join for table->death?
+		if (pthread_join(&table->table_mutex, NULL))
 			return (4);
 	}
 	return (0);

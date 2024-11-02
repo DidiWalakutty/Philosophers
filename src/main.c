@@ -23,9 +23,7 @@ int	main(int argc, char **argv)
 	if (set_table(&table, argv) == false)
 		return (1);
 	// 3 - start dinner simulation
-	begin_feast(&table, error);
-	if (error > 0)
-		print_error_message(error);
+	begin_feast(&table);
 	clean_table(table);
 	// 4 - clean -> when philos are full or a philo died
 }
