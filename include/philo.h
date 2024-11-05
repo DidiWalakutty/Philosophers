@@ -147,7 +147,6 @@ int		join_philosophers_threads(t_table *table);
 /* ************************************************************************** */
 
 bool	error_bool(char *message);
-char	*print_error(char *message);
 void	clean_join_threads(t_table *table, int philo_num);
 void	free_table(t_table *table, int code, int processed);
 

@@ -12,12 +12,6 @@
 
 #include "philo.h"
 
-char	*print_error(char *message)
-{
-	printf(RED "Error: %s\n" RST, message);
-	return (NULL);
-}
-
 bool	error_bool(char *message)
 {
 	printf(RED "Error: %s\n" RST, message);
