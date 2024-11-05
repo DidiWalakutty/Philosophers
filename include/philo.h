@@ -31,14 +31,14 @@
 /* ************************************************************************** */
 // Usage:  printf(RED "This is bold red text!" RST "\n");
 
-#define RST "\033[0m"      // Reset
-#define RED "\033[1;31m"   // Bold Red
-#define GR  "\033[1;32m"   // Bold Green
-#define Y   "\033[1;33m"   // Bold Yellow
-#define B   "\033[1;34m"   // Bold Blue
-#define M   "\033[1;35m"   // Bold Magenta
-#define C   "\033[1;36m"   // Bold Cyan
-#define W   "\033[1;37m"   // Bold White
+# define RST	"\033[0m"      // Reset
+# define RED	"\033[1;31m"   // Bold Red
+# define GR		"\033[1;32m"   // Bold Green
+# define Y		"\033[1;33m"   // Bold Yellow
+# define B		"\033[1;34m"   // Bold Blue
+# define M		"\033[1;35m"   // Bold Magenta
+# define C		"\033[1;36m"   // Bold Cyan
+# define W		"\033[1;37m"   // Bold White
 
 typedef pthread_mutex_t	t_mtx;
 typedef pthread_t		t_pthrd;
@@ -98,12 +98,13 @@ typedef struct s_table
 	long	num_limit_meals;	// if we have a max number of meals
 	long	active_threads;		// Monitors the number of active philo threads.
 	bool	limited_dinner;
+	long	num_of_full_philos;
 	long	start_simulation;	// when sim started
 	bool	end_simulation;		// when a philo dies or all philos are full
 	bool	philos_ready;		// for syncing of philos in meditation cycle.
 	t_mtx	table_mutex;		// avoid races while reading from table
 	t_mtx	write_mutex;
-	t_pthrd	death;		// pthread that checks if a philo has died
+	t_pthrd	death;				// pthread that checks if a philo has died
 	t_fork	*forks;				// array to all forks
 	t_philo	*philos;			// array to all philos
 }	t_table;
@@ -116,7 +117,9 @@ bool	check_input(int argc, char **argv);
 bool	set_table(t_table *table, char **argv);
 int		begin_feast(t_table *table);
 void	*meditation_cycle(void *data);
+int		meal_for_one(t_table *table);
 long	get_time(t_time unit);
+void	think(t_philo *philo, bool before_dinner_cycle);
 void	hyper_sleep(long micro_sec, t_table *table);
 void	toggle_lock_and_fork(t_locker latch, t_status activity, t_philo *philo);
 void	*monitoring_death(void *data);
@@ -126,23 +129,18 @@ void	clean_table(t_table *table);
 /*                              Helper Functions                              */
 /* ************************************************************************** */
 
+long	ft_atol(char *str);
 bool	initialize_input(t_table *table, char **argv);
 void	wait_for_all_philos(t_table *table);
 void	update_bool(t_mtx *mutex, bool *bool_condition, bool new_status);
 void	update_long(t_mtx *mutex, long *long_value, long new_value);
 bool	read_bool(t_mtx *mutex, bool *bool_condition);
 long	read_long(t_mtx *mutex, long *value);
+void	resync_thinking(t_philo *philo);
 bool	dinner_finished(t_table *table);
 void	print_activity(t_status status, t_philo *philo);
-void	print_debug_activity(t_status status, t_philo *philo); // remove later
 void	increase_active_threads(t_mtx *mutex, long *philo_threads);
-
-/* ************************************************************************** */
-/*                              Other Functions                               */
-/* ************************************************************************** */
-
-long	ft_atol(char *str);
-
+int		join_philosophers_threads(t_table *table);
 
 /* ************************************************************************** */
 /*                               Free and Errors                              */
@@ -150,6 +148,7 @@ long	ft_atol(char *str);
 
 bool	error_bool(char *message);
 char	*print_error(char *message);
+void	clean_join_threads(t_table *table, int philo_num);
 void	free_table(t_table *table, int code, int processed);
 
 #endif

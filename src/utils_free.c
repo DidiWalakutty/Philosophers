@@ -23,7 +23,7 @@ void	clean_table(t_table *table)
 	i = -1;
 	while (++i < table->num_of_philos)
 	{
-		philo = table->philos + 1;
+		philo = table->philos + i;
 		pthread_mutex_destroy(&philo->monitor_mutex);
 	}
 	pthread_mutex_destroy(&table->write_mutex);
@@ -72,14 +72,14 @@ void	free_table(t_table *table, int code, int processed)
 	free(table);
 }
 
-void	join_threads(t_table *table, int i)
+void	clean_join_threads(t_table *table, int philo_num)
 {
-	int	j;
+	int	i;
 
-	j = 0;
-	while (j < i)
+	i = 0;
+	while (i < philo_num)
 	{
-		pthread_join(table->philos[j].thread_id);
-		j++;
+		pthread_join(table->philos[i].thread_id, NULL);
+		i++;
 	}
 }

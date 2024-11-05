@@ -49,7 +49,6 @@ void	wait_for_all_philos(t_table *table)
 		;
 }
 
-
 // A precise usleep that uses a combination of usleep (> 1 millisec)
 // and a spinlock for precise timing that also checks if the sim ended.
 // Checks if the elapsed time has reached the given sleep duration.
@@ -77,5 +76,26 @@ void	hyper_sleep(long micro_sec, t_table *table)
 			while (get_time(MICROSECOND) - start < micro_sec)
 				;
 		}
+	}
+}
+
+// monitoring waits until all theads are running anymore.
+
+// re_sync philos for thinking time.
+// Even num_of_philos and its id is even, we let them
+// hyper_sleep for a very small amount of time for balance.
+// Else we trigger a thinking phase before the simulation.
+// This helps spread out the philos' actions.
+void	resync_thinking(t_philo *philo)
+{
+	if (philo->table->num_of_philos % 2 == 0)
+	{
+		if (philo->philo_id % 2 == 0)
+			hyper_sleep(30000, philo->table);
+	}
+	else
+	{
+		if (philo->philo_id % 2)
+			think(philo, true);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 16:58:59 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/28 19:48:47 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/05 18:54:54 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ bool	initialize_input(t_table *table, char **argv)
 	table->philos_ready = false;
 	table->limited_dinner = false;
 	table->num_limit_meals = -1;
+	table->num_of_full_philos = 0;
 	if (argv[5])
 	{
 		table->num_limit_meals = ft_atol(argv[5]);

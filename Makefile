@@ -1,12 +1,20 @@
 NAME 	= philo
 
 # Configuration
-CFLAGS	= -Wall -Werror -Wextra -pthread -g3 -I ./include #-fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -I ./include -pthread #-fsanitize=thread -g
 RM		= rm -rf
 SRCDIR	= src/
 OBJDIR	= obj/
 HEADER	= ./include/philo.h
 PHILO = philo
+
+# Colors
+RESET = \033[0m
+YELLOW = \33[1;43m
+BLUE=\033[1;44m
+RED=\033[0;31m
+PURPLE=\033[45m
+CORAL=\033[38;2;255;127;80m
 
 # Source Files
 SRCFILES =	main.c \
