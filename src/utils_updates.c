@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils_locks_and_updates.c                          :+:    :+:            */
+/*   utils_updates.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/23 19:45:02 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/10/25 18:46:49 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/05 21:46:01 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// These functions either read or adjust the values of booleans and longs.
-// They do this while locking first, doing their action, and unlocking.
-
-// This function updates the bool value.
 void	update_bool(t_mtx *mutex, bool *bool_condition, bool new_status)
 {
 	pthread_mutex_lock(mutex);
@@ -23,7 +19,6 @@ void	update_bool(t_mtx *mutex, bool *bool_condition, bool new_status)
 	pthread_mutex_unlock(mutex);
 }
 
-// This function updates the long value.
 void	update_long(t_mtx *mutex, long *long_value, long new_value)
 {
 	pthread_mutex_lock(mutex);
@@ -31,7 +26,6 @@ void	update_long(t_mtx *mutex, long *long_value, long new_value)
 	pthread_mutex_unlock(mutex);
 }
 
-// This function reads and returns the value of the bool.
 bool	read_bool(t_mtx *mutex, bool *bool_condition)
 {
 	bool	read_value;
@@ -42,7 +36,6 @@ bool	read_bool(t_mtx *mutex, bool *bool_condition)
 	return (read_value);
 }
 
-// This function reads and returns the value of long.
 long	read_long(t_mtx *mutex, long *value)
 {
 	long	read_value;

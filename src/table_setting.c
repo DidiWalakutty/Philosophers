@@ -33,7 +33,7 @@ static void	hand_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 	}
 }
 
-// Give each philo it's id and basic information.
+// check: table->philos + i;
 static bool	inform_philos(t_table *table)
 {
 	int		i;
