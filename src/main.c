@@ -21,7 +21,5 @@ int	main(int argc, char **argv)
 	if (set_table(&table, argv) == false)
 		return (1);
 	begin_feast(&table);
-	// printf("Stop sim\n");
-	// usleep(1000000);
 	clean_table(&table);
 }
