@@ -12,10 +12,9 @@
 
 #include "philo.h"
 
-// Even/odd fork assignment that ensures each philo gets two forks in a
-// circular manner, while avoiding deadlock situations.
-// It creates an alternating order, which breaks symmetry.
-// This function only assigns the forks.
+// Used an even/odd order to prevent deadlocks, where even philos pick up
+// their own left fork.Odd philos take their neighbor's fork. 
+// This way, at least one philo can proceed.
 static void	hand_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 {
 	int	num_of_philos;
@@ -33,7 +32,8 @@ static void	hand_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 	}
 }
 
-// check: table->philos + i;
+// The monitor_mutex protects each philos specific state information.
+// This mutex prevents race conditions on those individual philos data elements.
 static bool	inform_philos(t_table *table)
 {
 	int		i;
@@ -77,7 +77,6 @@ static bool	allocate_philos(t_table *table)
 	{
 		if (pthread_mutex_init(&table->forks[i].fork, NULL) != 0)
 			return ((free_table(table, 4, i)), false);
-		table->forks[i].fork_id = i;
 		i++;
 	}
 	if (inform_philos(table) == false)

@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 17:26:51 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/05 20:13:17 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/08 22:15:04 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@
 // the forks after handling possible meal limit.
 static void	eat(t_philo *philo)
 {
-	toggle_lock_and_fork(LOCK, EATING, philo);
+	if (toggle_lock_and_fork(LOCK, EATING, philo) == false)
+	{
+		pthread_mutex_unlock(&philo->first_fork->fork);
+		return ;
+	}
 	update_long(&philo->monitor_mutex, &philo->last_meal_time, \
 				get_time(MILLISECOND));
 	philo->eaten_meals++;
@@ -80,32 +84,27 @@ void	*meditation_cycle(void *data)
 	return (NULL);
 }
 
-// Manages/sets the main simulation and creates threads each philo.
+// Manages/sets the main simulation and creates threads for each philo.
 // Also creates a monitoring_death thread to oversee all philos' states.
 // Updates flags to indicate whether the philos are ready to start
 // and if the simulation has finished.
+// 
 int	begin_feast(t_table *table)
 {
 	int	i;
 
 	i = -1;
-	if (table->num_of_philos == 1)
-		return (meal_for_one(table));
-	else
+	while (++i < table->num_of_philos)
 	{
-		while (++i < table->num_of_philos)
-		{
-			if (pthread_create(&table->philos[i].thread_id, NULL, \
-								meditation_cycle, &table->philos[i]) != 0)
-				return (clean_join_threads(table, i), 1);
-		}
-		if (pthread_create(&table->death, NULL, monitoring_death, table) != 0)
-			return (clean_join_threads(table, i), 1);
-		table->start_simulation = get_time(MILLISECOND);
-		if (table->start_simulation == -1)
-			return (clean_join_threads(table, i), 1);
-		update_bool(&table->table_mutex, &table->philos_ready, true);
-		return (join_philosophers_threads(table));
+		if (pthread_create(&table->philos[i].thread_id, NULL, \
+							meditation_cycle, &table->philos[i]) != 0)
+			return (error_join_threads(table, i), 1);
 	}
-	return (0);
+	if (pthread_create(&table->death, NULL, monitoring_death, table) != 0)
+		return (error_join_threads(table, i), 1);
+	table->start_simulation = get_time(MILLISECOND);
+	if (table->start_simulation == -1)
+		return (error_join_threads(table, i), 1);
+	update_bool(&table->table_mutex, &table->philos_ready, true);
+	return (end_simulation_threads(table));
 }

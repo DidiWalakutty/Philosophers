@@ -72,7 +72,6 @@ typedef enum e_time
 typedef struct s_fork
 {
 	t_mtx	fork;
-	int		fork_id;
 }	t_fork;
 
 typedef struct s_philo
@@ -121,7 +120,7 @@ int		meal_for_one(t_table *table);
 long	get_time(t_time unit);
 void	think(t_philo *philo, bool before_dinner_cycle);
 void	hyper_sleep(long micro_sec, t_table *table);
-void	toggle_lock_and_fork(t_locker latch, t_status activity, t_philo *philo);
+bool	toggle_lock_and_fork(t_locker latch, t_status activity, t_philo *philo);
 void	*monitoring_death(void *data);
 void	clean_table(t_table *table);
 
@@ -140,14 +139,14 @@ void	resync_thinking(t_philo *philo);
 bool	dinner_finished(t_table *table);
 void	print_activity(t_status status, t_philo *philo);
 void	increase_active_threads(t_mtx *mutex, long *philo_threads);
-int		join_philosophers_threads(t_table *table);
+int		end_simulation_threads(t_table *table);
 
 /* ************************************************************************** */
 /*                               Free and Errors                              */
 /* ************************************************************************** */
 
 bool	error_bool(char *message);
-void	clean_join_threads(t_table *table, int philo_num);
+void	error_join_threads(t_table *table, int philo_num);
 void	free_table(t_table *table, int code, int processed);
 
 #endif
