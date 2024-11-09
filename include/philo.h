@@ -21,15 +21,6 @@
 # include <sys/time.h>	// gettimeofday
 # include <limits.h>	// int min and max
 # include <string.h>	// memset
-// printf zelf protecten met eigen mutex lock!!!
-// printf kan niet garanderen dat een andere thread eerder print
-// dan dat een andere thread zijn printf aanroept.
-// exit_error is verboden
-
-/* ************************************************************************** */
-/*                                ANSI Colors                                 */
-/* ************************************************************************** */
-// Usage:  printf(RED "This is bold red text!" RST "\n");
 
 # define RST	"\033[0m"      // Reset
 # define RED	"\033[1;31m"   // Bold Red
@@ -115,7 +106,7 @@ typedef struct s_table
 bool	check_input(int argc, char **argv);
 bool	set_table(t_table *table, char **argv);
 int		begin_feast(t_table *table);
-void	*meditation_cycle(void *data);
+void	*philo_cycle(void *data);
 int		meal_for_one(t_table *table);
 long	get_time(t_time unit);
 void	think(t_philo *philo, bool before_dinner_cycle);

@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 20:52:07 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/08 22:01:39 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/09 20:51:40 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	increase_active_threads(t_mtx *mutex, long *philo_threads)
 	pthread_mutex_unlock(mutex);
 }
 
+// pthread_join only completes when a thread has terminated executing.
+// 
 int	end_simulation_threads(t_table *table)
 {
 	int	i;
@@ -56,6 +58,8 @@ int	end_simulation_threads(t_table *table)
 		if (pthread_join(table->philos[i].thread_id, NULL))
 			return (1);
 	}
+	// Already update the bool in monitoring thread.
+	// Do we even need it?
 	update_bool(&table->table_mutex, &table->end_simulation, true);
 	pthread_join(table->death, NULL);
 	return (0);

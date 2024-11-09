@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 17:26:51 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/08 22:15:04 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/09 22:38:24 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,21 @@ static void	eat(t_philo *philo)
 		philo->table->num_of_full_philos++;
 		pthread_mutex_unlock(&philo->table->table_mutex);
 	}
+	// need to make it true/false?
 	toggle_lock_and_fork(UNLOCK, EATING, philo);
 }
 
-// Adds some idle time to philos in case of odd num_of_philos.
-// This helps avoid overlapping cycles, like re-thinking and 
-// another skipping thinking.
-// Think_time adds a bit of delay and matches the given rythm
-// of eating and sleeping. 40% of the time 
-void	think(t_philo *philo, bool before_dinner_cycle)
+// Calculates an fair think_time to keep philos in sync with eachother.
+// This ensures a balanced cycle where each philo's actions stay consistent.
+// It prevents situations where on philo skips thinking and immediately starts eating,
+// while an actively thinking philo should be starting next.
+void	think(t_philo *philo, bool in_dinner_cycle)
 {
 	long	eat_time;
 	long	sleep_time;
 	long	think_time;
 
-	if (before_dinner_cycle == false)
+	if (in_dinner_cycle == true)
 		print_activity(THINKING, philo);
 	if (philo->table->num_of_philos % 2 == 0)
 		return ;
@@ -61,9 +61,9 @@ void	think(t_philo *philo, bool before_dinner_cycle)
 	hyper_sleep(think_time * 0.40, philo->table);
 }
 
-// Wait for all philos, start simulation and set last_meal_time.
-// We increase_(num of)active_threads for our monitoring/death conditions.
-void	*meditation_cycle(void *data)
+// The actual eat, sleep, think cycle.
+// Each philo waits untill all philos are ready, so they can sync up.
+void	*philo_cycle(void *data)
 {
 	t_philo	*philo;
 
@@ -71,6 +71,7 @@ void	*meditation_cycle(void *data)
 	wait_for_all_philos(philo->table);
 	update_long(&philo->monitor_mutex, &philo->last_meal_time, \
 				get_time(MILLISECOND));
+	// Check: do we still need increase_active_threads????
 	increase_active_threads(&philo->table->table_mutex, \
 							&philo->table->active_threads);
 	resync_thinking(philo);
@@ -79,16 +80,15 @@ void	*meditation_cycle(void *data)
 		eat(philo);
 		print_activity(SLEEPING, philo);
 		hyper_sleep(philo->table->time_to_sleep, philo->table);
-		think(philo, false);
+		think(philo, true);
 	}
 	return (NULL);
 }
 
-// Manages/sets the main simulation and creates threads for each philo.
-// Also creates a monitoring_death thread to oversee all philos' states.
-// Updates flags to indicate whether the philos are ready to start
-// and if the simulation has finished.
-// 
+// Starts the dining sim by creating a thread for each philo and
+// a separate monitoring thread to check on their state.
+// Sets the start time and updates if all philos are ready to start their
+// meditation cycle.
 int	begin_feast(t_table *table)
 {
 	int	i;
@@ -97,7 +97,7 @@ int	begin_feast(t_table *table)
 	while (++i < table->num_of_philos)
 	{
 		if (pthread_create(&table->philos[i].thread_id, NULL, \
-							meditation_cycle, &table->philos[i]) != 0)
+							philo_cycle, &table->philos[i]) != 0)
 			return (error_join_threads(table, i), 1);
 	}
 	if (pthread_create(&table->death, NULL, monitoring_death, table) != 0)

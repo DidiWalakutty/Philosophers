@@ -12,14 +12,11 @@
 
 #include "philo.h"
 
-// function for updating time
-///
-// The time we receive as input is in miliseconds.
-// However, the usleep() wants microseconds, so we need to
-// adjust our input to microseconds.
-// gettimeofday will set the seconds and microseconds.
-
-// Convert the tv_seconds and tv_microseconds to the requested unit.
+// Converts time from seconds to the requested unit: 
+// tv_sec gives seconds. * 1000 to get milli, * million for micros.
+// tv_usec gives micros. / 1000 to get milli.
+// MICROSECOND is used for fine-grained timing (small delays, precise syncing).
+// MILLISECOND is for larger intervals (meal durations), optimizing performance.
 long	get_time(t_time unit)
 {
 	struct timeval	tv;
@@ -40,18 +37,16 @@ long	get_time(t_time unit)
 	}
 }
 
-// This function makes sure that each philo in its own
-// meditation/dinner cycle, waits until the bool
-// philos_ready is true. This way all philos start at the same time.
+// Blocks each philo until all philos are ready.
 void	wait_for_all_philos(t_table *table)
 {
 	while (!read_bool(&table->table_mutex, &table->philos_ready))
 		;
 }
 
-// A precise usleep that uses a combination of usleep (> 1 millisec)
-// and a spinlock for precise timing that also checks if the sim ended.
-// Checks if the elapsed time has reached the given sleep duration.
+// A precise sleep function that combines usleep and a spinlock 
+// to wait for a specified duration, while periodically checking 
+// if the simulation has ended. Ensures accurate timing even for small delays.
 void	hyper_sleep(long micro_sec, t_table *table)
 {
 	long	start;
@@ -79,13 +74,10 @@ void	hyper_sleep(long micro_sec, t_table *table)
 	}
 }
 
-// monitoring waits until all theads are running anymore.
-
-// re_sync philos for thinking time.
-// Even num_of_philos and its id is even, we let them
-// hyper_sleep for a very small amount of time for balance.
-// Else we trigger a thinking phase before the simulation.
-// This helps spread out the philos' actions.
+// Delays philo's actions to prevent deadlocks and overlapping actions.
+// Even num: Even's wait 30 ms to spread out actions.
+// Odd num: Odd's think first to balance timing and avoid everyone grabbing
+// forks at once. This reduces repeated conflicts and ensures fairer turns.
 void	resync_thinking(t_philo *philo)
 {
 	if (philo->table->num_of_philos % 2 == 0)
@@ -95,7 +87,7 @@ void	resync_thinking(t_philo *philo)
 	}
 	else
 	{
-		if (philo->philo_id % 2)
-			think(philo, true);
+		if (philo->philo_id % 2 != 0)
+			think(philo, false);
 	}
 }

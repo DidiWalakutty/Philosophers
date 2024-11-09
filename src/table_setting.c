@@ -42,10 +42,11 @@ static bool	inform_philos(t_table *table)
 	i = -1;
 	while (++i < table->num_of_philos)
 	{
-		philo = table->philos + i;
+		philo = &table->philos[i];
 		philo->philo_id = i + 1;
-		philo->full = false;
 		philo->eaten_meals = 0;
+		philo->last_meal_time = 0;
+		philo->full = false;
 		philo->table = table;
 		if (pthread_mutex_init(&table->philos->monitor_mutex, NULL) != 0)
 			return (free_table(table, 5, i), false);
@@ -84,8 +85,6 @@ static bool	allocate_philos(t_table *table)
 	return (true);
 }
 
-// This function sets everything we need before we
-// start the actual simulation.
 bool	set_table(t_table *table, char **argv)
 {
 	if (initialize_input(table, argv) == false)

@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/28 17:59:57 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/08 21:52:54 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/09 22:36:56 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,16 @@ static bool	all_philos_full(t_table *table)
 	return (flag);
 }
 
-// Continuously checks if a philo has died 
-// (if elapsed meal time is > time_to_die)
+// Continuously checks if any philosopher has died or if the philos are full. 
+// It sets a shared flag (end_simulation) when the simulation should stop. 
+// The philosopher threads check this flag to exit their cycles.
 void	*monitoring_death(void *data)
 {
 	int		i;
 	t_table	*table;
 
 	table = (t_table *)data;
+	// do we still need all_threads_active?
 	while (!all_threads_active(&table->table_mutex, &table->active_threads, \
 								table->num_of_philos))
 		;
@@ -69,11 +71,11 @@ void	*monitoring_death(void *data)
 		i = -1;
 		while (++i < table->num_of_philos)
 		{
-			if (philo_died(table->philos + i) || all_philos_full(table))
+			if (philo_died(&table->philos[i]) || all_philos_full(table))
 			{
 				update_bool(&table->table_mutex, &table->end_simulation, true);
-				if (philo_died(table->philos + i))
-					print_activity(DIED, table->philos + i);
+				if (philo_died(&table->philos[i]))
+					print_activity(DIED, &table->philos[i]);
 				return (NULL);
 			}
 		}

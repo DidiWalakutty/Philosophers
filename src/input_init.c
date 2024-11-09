@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 16:58:59 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/08 18:37:25 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/09 20:25:18 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	validate_table_values(t_table *table)
 
 // We set and validate all given values.
 // Our input is millisecs, so we multiply * 1000 to convert
-// to microsecs for usleep.
+// to microsecs for usleep and gettimeofday.
 bool	initialize_input(t_table *table, char **argv)
 {
 	table->num_of_philos = ft_atol(argv[1]);
