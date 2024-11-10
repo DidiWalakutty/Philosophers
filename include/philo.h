@@ -70,10 +70,10 @@ typedef struct s_philo
 	int			philo_id;
 	long		eaten_meals;
 	bool		full;
-	long		last_meal_time;	// time since last meal. MS, so long
+	long		last_meal_time;
 	t_fork		*first_fork;
 	t_fork		*second_fork;
-	pthread_t	thread_id;		// a philo is a thread
+	pthread_t	thread_id;
 	t_mtx		monitor_mutex;
 	t_table		*table;
 }	t_philo;
@@ -81,7 +81,6 @@ typedef struct s_philo
 typedef struct s_table
 {
 	long	num_of_philos;
-	long	allocated_num_philos; // for freeing if allocation failed???
 	long	time_to_die;
 	long	time_to_eat;
 	long	time_to_sleep;
@@ -107,7 +106,6 @@ bool	check_input(int argc, char **argv);
 bool	set_table(t_table *table, char **argv);
 int		begin_feast(t_table *table);
 void	*philo_cycle(void *data);
-int		meal_for_one(t_table *table);
 long	get_time(t_time unit);
 void	think(t_philo *philo, bool before_dinner_cycle);
 void	hyper_sleep(long micro_sec, t_table *table);

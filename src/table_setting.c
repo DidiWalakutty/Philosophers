@@ -55,9 +55,6 @@ static bool	inform_philos(t_table *table)
 	return (true);
 }
 
-// Allocate the structs for philos and forks.
-// Create a mutex for each philo/fork.
-// Inform/set all values for each philo.
 static bool	allocate_philos(t_table *table)
 {
 	int	i;
@@ -88,7 +85,7 @@ static bool	allocate_philos(t_table *table)
 bool	set_table(t_table *table, char **argv)
 {
 	if (initialize_input(table, argv) == false)
-		return ((free(table)), false);
+		return (false);
 	if (allocate_philos(table) == false)
 		return (false);
 	return (true);

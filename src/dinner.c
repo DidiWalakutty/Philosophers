@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 17:26:51 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/09 22:38:24 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/10 18:40:50 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,13 @@ static void	eat(t_philo *philo)
 		philo->table->num_of_full_philos++;
 		pthread_mutex_unlock(&philo->table->table_mutex);
 	}
-	// need to make it true/false?
 	toggle_lock_and_fork(UNLOCK, EATING, philo);
 }
 
 // Calculates an fair think_time to keep philos in sync with eachother.
 // This ensures a balanced cycle where each philo's actions stay consistent.
-// It prevents situations where on philo skips thinking and immediately starts eating,
-// while an actively thinking philo should be starting next.
+// It prevents situations where on philo skips thinking and immediately
+// starts eating, while an actively thinking philo should be starting next.
 void	think(t_philo *philo, bool in_dinner_cycle)
 {
 	long	eat_time;
@@ -71,7 +70,6 @@ void	*philo_cycle(void *data)
 	wait_for_all_philos(philo->table);
 	update_long(&philo->monitor_mutex, &philo->last_meal_time, \
 				get_time(MILLISECOND));
-	// Check: do we still need increase_active_threads????
 	increase_active_threads(&philo->table->table_mutex, \
 							&philo->table->active_threads);
 	resync_thinking(philo);

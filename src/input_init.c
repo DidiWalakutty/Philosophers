@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 16:58:59 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/09 20:25:18 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/10 19:00:15 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ static bool	validate_table_values(t_table *table)
 {
 	if (table->num_of_philos == -1 || table->time_to_die == -1 || \
 		table->time_to_eat == -1 || table->time_to_sleep == -1)
-		return (error_bool("Number is > than INT_MAX\n"));
+		return (error_bool("Number is > than INT_MAX"));
+	if (table->num_of_philos > 200)
+		return (error_bool("Number of philos is > 200"));
 	if (table->limited_dinner == true && table->num_limit_meals == -1)
-		return (error_bool("Number is > than INT_MAX\n"));
+		return (error_bool("Number is > than INT_MAX"));
 	else if (table->time_to_die < 60000 || table->time_to_eat < 60000 || \
 		table->time_to_sleep < 60000)
-		return (error_bool("Use timestamps bigger than 60 ms\n"));
+		return (error_bool("Use timestamps bigger than 60 ms"));
 	if (table->limited_dinner == true && table->num_limit_meals == 0)
 		return (error_bool("Given limited meals is 0"));
 	return (true);
@@ -38,7 +40,6 @@ bool	initialize_input(t_table *table, char **argv)
 	table->time_to_die = ft_atol(argv[2]) * 1000;
 	table->time_to_eat = ft_atol(argv[3]) * 1000;
 	table->time_to_sleep = ft_atol(argv[4]) * 1000;
-	table->allocated_num_philos = 0;
 	table->active_threads = 0;
 	table->philos_ready = false;
 	table->limited_dinner = false;

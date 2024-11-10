@@ -12,6 +12,13 @@
 
 #include "philo.h"
 
+// Blocks each philo until all philos are ready.
+void	wait_for_all_philos(t_table *table)
+{
+	while (!read_bool(&table->table_mutex, &table->philos_ready))
+		;
+}
+
 // Converts time from seconds to the requested unit: 
 // tv_sec gives seconds. * 1000 to get milli, * million for micros.
 // tv_usec gives micros. / 1000 to get milli.
@@ -37,11 +44,22 @@ long	get_time(t_time unit)
 	}
 }
 
-// Blocks each philo until all philos are ready.
-void	wait_for_all_philos(t_table *table)
+// Delays philo's actions to prevent deadlocks and overlapping actions.
+// Even num: Even's wait 30 ms to spread out actions.
+// Odd num: Odd's think first to balance timing and avoid everyone grabbing
+// forks at once. This reduces repeated conflicts and ensures fairer turns.
+void	resync_thinking(t_philo *philo)
 {
-	while (!read_bool(&table->table_mutex, &table->philos_ready))
-		;
+	if (philo->table->num_of_philos % 2 == 0)
+	{
+		if (philo->philo_id % 2 == 0)
+			hyper_sleep(30000, philo->table);
+	}
+	else
+	{
+		if (philo->philo_id % 2 != 0)
+			think(philo, false);
+	}
 }
 
 // A precise sleep function that combines usleep and a spinlock 
@@ -71,23 +89,5 @@ void	hyper_sleep(long micro_sec, t_table *table)
 			while (get_time(MICROSECOND) - start < micro_sec)
 				;
 		}
-	}
-}
-
-// Delays philo's actions to prevent deadlocks and overlapping actions.
-// Even num: Even's wait 30 ms to spread out actions.
-// Odd num: Odd's think first to balance timing and avoid everyone grabbing
-// forks at once. This reduces repeated conflicts and ensures fairer turns.
-void	resync_thinking(t_philo *philo)
-{
-	if (philo->table->num_of_philos % 2 == 0)
-	{
-		if (philo->philo_id % 2 == 0)
-			hyper_sleep(30000, philo->table);
-	}
-	else
-	{
-		if (philo->philo_id % 2 != 0)
-			think(philo, false);
 	}
 }

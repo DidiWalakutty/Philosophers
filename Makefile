@@ -1,7 +1,7 @@
 NAME 	= philo
 
 # Configuration
-CFLAGS	= -Wall -Werror -Wextra -I ./include -pthread #-fsanitize=thread -g
+CFLAGS	= -Wall -Werror -Wextra -I ./include -pthread #-fsanitize=address -g
 RM		= rm -rf
 SRCDIR	= src/
 OBJDIR	= obj/
@@ -10,8 +10,6 @@ PHILO = philo
 
 # Colors
 RESET = \033[0m
-YELLOW = \33[1;43m
-BLUE=\033[1;44m
 RED=\033[0;31m
 PURPLE=\033[45m
 CORAL=\033[38;2;255;127;80m
@@ -50,6 +48,3 @@ fclean: clean
 	@echo "$(RED) 🗑️     Cleaned up remaining files   🗑️$(RESET)\n"
 
 re: fclean all
-
-run: $(NAME)
-	valgrind --leak-check=full -s ./$(NAME)

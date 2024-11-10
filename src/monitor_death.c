@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/28 17:59:57 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/09 22:36:56 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/10 18:37:23 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	*monitoring_death(void *data)
 	t_table	*table;
 
 	table = (t_table *)data;
-	// do we still need all_threads_active?
 	while (!all_threads_active(&table->table_mutex, &table->active_threads, \
 								table->num_of_philos))
 		;

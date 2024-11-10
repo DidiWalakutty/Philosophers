@@ -40,7 +40,7 @@ static bool	check_validity(char *str)
 	else if (str[i] == '-')
 		return (error_bool("You're argument contains a negative number"));
 	if (!is_digit(str[i]))
-		return (error_bool("This iput contains a non-digit"));
+		return (error_bool("This input contains a non-digit"));
 	while (is_digit(str[i]))
 	{
 		digit_count++;
