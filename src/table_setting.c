@@ -42,13 +42,12 @@ static bool	inform_philos(t_table *table)
 	i = -1;
 	while (++i < table->num_of_philos)
 	{
-		philo = &table->philos[i];
+		philo = table->philos + i;
 		philo->philo_id = i + 1;
 		philo->eaten_meals = 0;
 		philo->last_meal_time = 0;
-		philo->full = false;
 		philo->table = table;
-		if (pthread_mutex_init(&table->philos->monitor_mutex, NULL) != 0)
+		if (pthread_mutex_init(&philo->monitor_mutex, NULL) != 0)
 			return (free_table(table, 5, i), false);
 		hand_out_forks(philo, table->forks, i);
 	}

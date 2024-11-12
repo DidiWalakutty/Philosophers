@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 16:58:59 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/10 19:00:15 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/12 20:34:51 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 // ft_atol sets the value to -1 in case of > INT_MAX
 static bool	validate_table_values(t_table *table)
 {
+	if (table->num_of_philos == 0)
+		return (error_bool("Have at least 1 philosopher"));
 	if (table->num_of_philos == -1 || table->time_to_die == -1 || \
 		table->time_to_eat == -1 || table->time_to_sleep == -1)
 		return (error_bool("Number is > than INT_MAX"));

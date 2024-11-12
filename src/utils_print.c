@@ -22,8 +22,6 @@ void	print_activity(t_status status, t_philo *philo)
 {
 	long	time_stamp;
 
-	if (philo->full)
-		return ;
 	pthread_mutex_lock(&philo->table->write_mutex);
 	time_stamp = get_time(MILLISECOND) - philo->table->start_simulation;
 	if ((status == TAKEN_FIRST_FORK || status == TAKEN_SEC_FORK) && \

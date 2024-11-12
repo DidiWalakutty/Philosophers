@@ -1,7 +1,7 @@
 NAME 	= philo
 
 # Configuration
-CFLAGS	= -Wall -Werror -Wextra -I ./include -pthread #-fsanitize=address -g
+CFLAGS	= -Wall -Werror -Wextra -I ./include -pthread #-fsanitize=thread -g
 RM		= rm -rf
 SRCDIR	= src/
 OBJDIR	= obj/

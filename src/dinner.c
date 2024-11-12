@@ -6,7 +6,7 @@
 /*   By: diwalaku <diwalaku@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 17:26:51 by diwalaku      #+#    #+#                 */
-/*   Updated: 2024/11/10 18:40:50 by diwalaku      ########   odam.nl         */
+/*   Updated: 2024/11/12 22:09:28 by diwalaku      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	*philo_cycle(void *data)
 		eat(philo);
 		print_activity(SLEEPING, philo);
 		hyper_sleep(philo->table->time_to_sleep, philo->table);
+		if (dinner_finished(philo->table))
+			break ;
 		think(philo, true);
 	}
 	return (NULL);

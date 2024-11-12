@@ -80,13 +80,14 @@ void	hyper_sleep(long micro_sec, t_table *table)
 		sleep_left = micro_sec - passed_time;
 		if (sleep_left > 1000)
 		{
-			usleep(sleep_left / 2);
+			usleep(200);
 			if (dinner_finished(table))
 				break ;
 		}
 		else
 		{
-			while (get_time(MICROSECOND) - start < micro_sec)
+			while (get_time(MICROSECOND) - start < micro_sec && \
+				!dinner_finished(table))
 				;
 		}
 	}
